@@ -10,5 +10,6 @@ class JenisAsn extends Model
     use HasFactory;
 
     protected $table = 'jenis_asn';
+
     protected $fillable = ['nama'];
 }

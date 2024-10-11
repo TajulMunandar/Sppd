@@ -63,7 +63,7 @@
                                 <td>{{ $surat->lama_tugas }}</td>
                                 <td>{{ Carbon\Carbon::parse($surat->tanggal_st)->format('d/m/Y') }}</td>
                                 <td>{{ Carbon\Carbon::parse($surat->tanggal_berangkat)->format('d/m/Y') }}</td>
-                                <td>{{ $surat->tanggal_kembali }}</td>
+                                <td>{{ Carbon\Carbon::parse($surat->tanggal_kembali)->format('d/m/Y') }}</td>
                                 <td>
                                     <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                             data-bs-target="#editSppd{{ $loop->iteration }}">
@@ -150,9 +150,9 @@
 
                                 <div class="mb-3">
                                     <label for="tujuan" class="form-label">Tujuan</label>
-                                    <input type="text" class="form-control @error('tujuan') is-invalid @enderror"
-                                           name="tujuan" id="tujuan"
-                                           value="{{ old('tujuan', $surat->tujuan) }}" required>
+                                    <textarea type="text" class="form-control @error('tujuan') is-invalid @enderror"
+                                              name="tujuan" id="tujuan"
+                                              value="{{ old('tujuan', $surat->tujuan) }}" required></textarea>
                                     @error('tujuan')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -290,8 +290,8 @@
             </div>
             <div class="mb-3">
                 <label for="tujuan" class="form-label">Tujuan</label>
-                <input type="text" class="form-control @error('tujuan') is-invalid @enderror" name="tujuan"
-                       id="tujuan" value="{{ old('tujuan') }}" required>
+                <textarea type="text" class="form-control @error('tujuan') is-invalid @enderror" name="tujuan"
+                          id="tujuan" value="{{ old('tujuan') }}" required></textarea>
                 @error('tujuan')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror

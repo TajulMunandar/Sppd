@@ -456,9 +456,9 @@
                     $('#harga_diskon').val(diskon).trigger('mask.maskMoney');
                 });
 
-                const harga = "{{ $akomodasi->harga }}";
-                const hargaDiskon = "{{ $akomodasi->harga_diskon }}";
-                const bbm = "{{ $akomodasi->bbm }}";
+                const harga = "{{ $akomodasi->harga ?? 0 }}";
+                const hargaDiskon = "{{ $akomodasi->harga_diskon ?? 0 }}";
+                const bbm = "{{ $akomodasi->bbm ?? 0 }}";
                 hargaField.val(harga).trigger('mask.maskMoney');
                 $('#harga_diskon').val(hargaDiskon).trigger('mask.maskMoney');
                 $('#bbm').val(bbm).trigger('mask.maskMoney');

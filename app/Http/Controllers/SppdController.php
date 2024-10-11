@@ -11,6 +11,7 @@ use App\Models\Sppd;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
@@ -23,10 +24,11 @@ class SppdController extends Controller
     public function index()
     {
 
-        $title = 'Data Sppd';
-        $sppds = Sppd::with('pegawais')->latest()->get();
+        $title = 'Data SPPD';
+        $sppds = Sppd::with('suratTugas', 'pegawais')->latest()->get();
         $jenises = JenisTugas::all();
         $users = Pegawai::all();
+        //        dd($sppds->toArray());
 
         return view('admin.sppd.index')->with(compact('title', 'sppds', 'jenises', 'users'));
     }
@@ -54,7 +56,10 @@ class SppdController extends Controller
             return redirect()->back()->with('failed', $e->getMessage());
         }
 
-        return redirect()->route('surat.index', ['id' => $sppd->id])->with('success', 'Sppd baru berhasil ditambahkan!');
+        return to_route('surat.index', [
+            'id' => Crypt::encrypt($sppd->id),
+            'jenis' => Crypt::encrypt($validatedData['jenis_tugas_id']),
+        ])->with('success', 'Sppd baru berhasil ditambahkan!');
     }
 
     /**
@@ -70,6 +75,7 @@ class SppdController extends Controller
      */
     public function show(Sppd $sppd)
     {
+        $title = 'Detail Data Sppd';
     }
 
     /**
@@ -126,7 +132,7 @@ class SppdController extends Controller
             }
         }
 
-        return redirect()->route('sppd.index')->with('success', "sppd $sppd->name berhasil dihapus!");
+        return to_route('sppd.index')->with('success', 'Data sppd berhasil dihapus!');
     }
 
     public function showTemplate(Sppd $sppd)

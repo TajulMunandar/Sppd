@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateAkomodasiRequest;
 use App\Models\Akomodasi;
 use App\Models\Sppd;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class AkomodasiController extends Controller
@@ -30,7 +31,7 @@ class AkomodasiController extends Controller
         $validatedData = $request->validated();
         $harga = $validatedData['harga'] ?: 0;
         $lama_inap = $validatedData['lama_inap'] ?: 0;
-//            dd($validatedData);
+        //            dd($validatedData);
         $validatedData['total_uang'] = $request->lama_inap != null ? $lama_inap * $harga : $validatedData['harga_diskon'];
         Akomodasi::updateOrCreate(
             ['sppd_id' => $request->sppd_id],
@@ -71,7 +72,7 @@ class AkomodasiController extends Controller
 
             return redirect()->back()->with('success', "Data Akomodasi $akomodasi->name_hotel berhasil diperbarui!");
         } catch (ValidationException $exception) {
-            return redirect()->back()->with('failed', 'Data gagal diperbarui! ' . $exception->getMessage());
+            return redirect()->back()->with('failed', 'Data gagal diperbarui! '.$exception->getMessage());
         }
     }
 
@@ -81,7 +82,8 @@ class AkomodasiController extends Controller
     public function destroy(Akomodasi $akomodasi)
     {
         try {
-            Akomodasi::destroy($akomodasi->id);
+            $akomodasi->delete();
+            DB::statement('ALTER TABLE akomodasi AUTO_INCREMENT=1');
         } catch (QueryException $e) {
             if ($e->getCode() == 23000) {
                 //SQLSTATE[23000]: Integrity constraint violation
@@ -96,7 +98,7 @@ class AkomodasiController extends Controller
     {
         $sppd = Sppd::find($sppdId);
         $title = 'Data Sppd Detail - Akomodasi ';
-        if (!$sppd) {
+        if (! $sppd) {
             abort(404); // Or handle the case when the Sppd is not found
         }
 

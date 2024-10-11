@@ -20,7 +20,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
+        rel="stylesheet">
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css">
@@ -31,31 +31,28 @@
 </head>
 
 <body class="bg-light">
-<!-- container -->
-<div class="container d-flex flex-column">
-    <div class="row align-items-center justify-content-center g-0 min-vh-100">
-        <div class="col-12 col-md-8 col-lg-6 col-xxl-4 py-8 py-xl-0">
-            {{ $slot }}
+    <!-- container -->
+    <div class="container d-flex flex-column">
+        <div class="row align-items-center justify-content-center g-0 min-vh-100">
+            <div class="py-8 col-12 col-md-8 col-lg-6 col-xxl-4 py-xl-0">
+                {{ $slot }}
+            </div>
         </div>
     </div>
-</div>
-<!-- Scripts -->
-<!-- Libs JS -->
-<script src="{{ asset('libs/jquery/dist/jquery.min.js') }}"></script>
-<script src="{{ asset('libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('libs/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <!-- Scripts -->
+    <!-- Libs JS -->
+    <script src="{{ asset('libs/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('libs/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-<!-- Theme JS -->
-<script src="{{ asset('js/theme.min.js') }}"></script>
-
-<script>
-    $(document).ready(function () {
-        $('#showpsd').click(function () {
-            $(this).is(':checked') ? $('#password').attr('type', 'text') : $('#password').attr('type',
-                'password');
+    <script>
+        $(document).ready(function() {
+            $('#showpsd').click(function() {
+                $(this).is(':checked') ? $('#password').attr('type', 'text') : $('#password').attr('type',
+                    'password');
+            });
         });
-    });
-</script>
+    </script>
 </body>
 
 </html>

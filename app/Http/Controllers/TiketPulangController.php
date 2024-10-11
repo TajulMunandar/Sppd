@@ -8,6 +8,7 @@ use App\Models\TotalPulang;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -16,12 +17,15 @@ class TiketPulangController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Data Tiket Pulang';
         $tiket = TotalPulang::where('sppd_id', request('id'))->first();
+        $sppdId = $request->id;
+        $jenis = $request->jenis;
+        $tipe = Crypt::decrypt($request->jenis);
 
-        return view('admin.sppd.total_pulang.create')->with(compact('title', 'tiket'));
+        return view('admin.sppd.total_pulang.create', compact('title', 'tiket', 'sppdId', 'jenis', 'tipe'));
     }
 
     /**

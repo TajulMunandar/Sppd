@@ -8,6 +8,7 @@ use App\Models\TotalPergi;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\ValidationException;
 
 class TiketPergiController extends Controller
@@ -15,12 +16,15 @@ class TiketPergiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Data Tiket Pergi';
         $tiket = TotalPergi::where('sppd_id', request('id'))->first();
+        $sppdId = $request->id;
+        $jenis = $request->jenis;
+        $tipe = Crypt::decrypt($request->jenis);
 
-        return view('admin.sppd.total_pergi.create')->with(compact('title', 'tiket'));
+        return view('admin.sppd.total_pergi.create', compact('title', 'tiket', 'sppdId', 'jenis', 'tipe'));
     }
 
     /**

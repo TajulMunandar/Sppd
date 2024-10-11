@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUangHarianRequest;
+use App\Http\Requests\UangHarianRequest;
+use App\Http\Requests\UpdateUangHarianRequest;
 use App\Models\Sppd;
 use App\Models\SuratTugas;
 use App\Models\UangHarian;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\ValidationException;
 
 class UangHarianController extends Controller
@@ -17,29 +21,26 @@ class UangHarianController extends Controller
     public function index(Request $request)
     {
         $title = 'Data Uang Harian';
+        $sppdId = $request->id;
+        $jenis = $request->jenis;
+        $tipe = Crypt::decrypt($request->jenis);
 
-        return view('admin.sppd.uang_harian.create')->with(compact('title'));
+        return view('admin.sppd.uang_harian.create', compact('title', 'sppdId', 'jenis', 'tipe'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUangHarianRequest $request)
     {
         $st = SuratTugas::where('sppd_id', $request->sppd_id)->first();
 
         try {
-            $validatedData = $request->validate([
-                'sppd_id' => 'required',
-                'harian' => 'required',
-                'konsumsi' => 'required',
-                'transportasi' => 'required',
-                'representasi' => 'required',
-            ]);
+            $validatedData = $request->validated();
             $validatedData['total_harian'] = $request->harian * $st->lama_tugas;
             $validatedData['total_konsumsi'] = $request->konsumsi * $st->lama_tugas;
             $validatedData['total_transportasi'] = $request->transportasi * $st->lama_tugas;
-            $validatedData['total_representasi'] = $request->representasi * $st->lama_tugas;
+            $validatedData['total_representasi'] = $request->representasi;
         } catch (ValidationException $exception) {
             return back()->with('failed', $exception->getMessage());
         }
@@ -76,22 +77,13 @@ class UangHarianController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, UangHarian $uang)
+    public function update(UpdateUangHarianRequest $request, UangHarian $uang)
     {
         try {
-            $rules = [
-                'harian' => 'required',
-                'konsumsi' => 'required',
-                'transportasi' => 'required',
-                'representasi' => 'required',
-            ];
-
-            unset($rules['sppd_id']);
-
-            $validatedData = $this->validate($request, $rules);
+            $validatedData = $request->validated();
             $validatedData['sppd_id'] = $uang->sppd_id;
 
-            UangHarian::where('id', $uang->id)->update($validatedData);
+            $uang->update($validatedData);
 
             return redirect()->back()->with('success', "Data Uang Harian $uang->harian berhasil diperbarui!");
         } catch (ValidationException $exception) {
@@ -129,19 +121,18 @@ class UangHarianController extends Controller
         return view('admin.sppd.uang_harian.show', compact('uangs', 'title', 'sppd'));
     }
 
-    public function storeDetail(Request $request)
+    public function storeDetail(UangHarianRequest $request)
     {
         try {
-            $validatedData = $request->validate([
-                'sppd_id' => 'required',
-                'harian' => 'required',
-                'konsumsi' => 'required',
-                'transportasi' => 'required',
-                'representasi' => 'required',
-            ]);
+            $validatedData = $request->validated();
         } catch (ValidationException $exception) {
             return redirect()->back()->with('failed', $exception->getMessage());
         }
+
+        $suratTugas = SuratTugas::where('sppd_id', $validatedData['sppd_id'])->firstOrFail();
+        $validatedData['total_harian'] = $validatedData['harian'] * $suratTugas->lama_tugas;
+        $validatedData['total_konsumsi'] = $validatedData['konsumsi'] * $suratTugas->lama_tugas;
+        $validatedData['total_transportasi'] = $validatedData['transportasi'] * $suratTugas->lama_tugas;
 
         UangHarian::create($validatedData);
 

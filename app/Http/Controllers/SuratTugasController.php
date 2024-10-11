@@ -9,6 +9,7 @@ use App\Models\Sppd;
 use App\Models\SuratTugas;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -17,12 +18,15 @@ class SuratTugasController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Data Surat';
-        $pegawais = Pegawai::select('id', 'nama')->get();
+        $pegawais = Pegawai::all();
+        $sppdId = $request->id;
+        $jenis = $request->jenis;
+        $tipe = Crypt::decrypt($request->jenis);
 
-        return view('admin.sppd.surat_tugas.create')->with(compact('title', 'pegawais'));
+        return view('admin.sppd.surat_tugas.create', compact('title', 'pegawais', 'sppdId', 'jenis', 'tipe'));
     }
 
     /**

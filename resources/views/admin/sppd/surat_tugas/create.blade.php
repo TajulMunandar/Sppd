@@ -12,9 +12,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-            @if($errors->any())
+            @if ($errors->any())
                 <ul>
-                    @foreach($errors->all() as $error)
+                    @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
@@ -28,103 +28,94 @@
                 Kembali
             </a>
             <div class="container mt-4">
-                <div class="row">
-                    <div class="col">
-                        <a href="{{ route('surat.index', ['id' => request('id')] ) }}" class="btn btn-primary">
-                            <i class="fa-regular fa-envelopes-bulk me-2"></i>
-                            Surat Tugas
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a href="{{ route('uang.index', ['id' => request('id')] ) }}" class="btn btn-outline-secondary">
-                            <i class="fa-regular fa-money-bill me-2"></i>
-                            Uang Harian
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a href="{{ route('akomodasi.index', ['id' => request('id')] ) }}"
-                           class="btn btn-outline-secondary">
-                            <i class="fa-regular fa-cars me-2"></i>
-                            Akomodasi
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a href="{{ route('pergi.index', ['id' => request('id')] ) }}"
-                           class="btn btn-outline-secondary">
-                            <i class="fa-regular fa-plane-departure me-2"></i>
-                            Tiket Pergi
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a href="{{ route('pulang.index', ['id' => request('id')] ) }}"
-                           class="btn btn-outline-secondary">
-                            <i class="fa-regular fa-plane-arrival me-2"></i>
-                            Tiket Pulang
-                        </a>
-                    </div>
-                </div>
+                <a href="{{ route('surat.index', ['id' => $sppdId, 'jenis' => $jenis]) }}" class="btn btn-primary">
+                    <i class="fa-regular fa-envelopes-bulk me-2"></i>
+                    Surat Tugas
+                </a>
+                <a href="{{ route('uang.index', ['id' => $sppdId, 'jenis' => $jenis]) }}"
+                    class="btn btn-outline-secondary">
+                    <i class="fa-regular fa-money-bill me-2"></i>
+                    Uang Harian
+                </a>
+                @if ($tipe == 1)
+                    <a href="{{ route('akomodasi.index', ['id' => $sppdId, 'jenis' => $jenis]) }}"
+                        class="btn btn-outline-secondary">
+                        <i class="fa-regular fa-cars me-2"></i>
+                        Akomodasi
+                    </a>
+                    <a href="{{ route('pergi.index', ['id' => $sppdId, 'jenis' => $jenis]) }}"
+                        class="btn btn-outline-secondary">
+                        <i class="fa-regular fa-plane-departure me-2"></i>
+                        Tiket Pergi
+                    </a>
+                    <a href="{{ route('pulang.index', ['id' => $sppdId, 'jenis' => $jenis]) }}"
+                        class="btn btn-outline-secondary">
+                        <i class="fa-regular fa-plane-arrival me-2"></i>
+                        Tiket Pulang
+                    </a>
+                @endif
             </div>
 
 
-            <div class="card mt-3">
+            <div class="mt-3 card">
                 <div class="card-body">
                     {{-- Form Berita --}}
                     <form action="{{ route('surat.store') }}" method="post">
                         @csrf
-                        <input type="hidden" name="sppd_id" value="{{ request('id') }}">
+                        <input type="hidden" name="sppd_id" value="{{ $sppdId }}">
 
                         <div class="mb-3">
                             <label for="nomor_st" class="form-label">Nomor ST/SPT</label>
                             <input type="text" class="form-control @error('nomor_st') is-invalid @enderror"
-                                   name="nomor_st" id="nomor_st" value="{{ old('nomor_st') }}" autofocus required>
+                                name="nomor_st" id="nomor_st" value="{{ old('nomor_st') }}" autofocus required>
                             @error('nomor_st')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="nomor_spd" class="form-label">Nomor SPD</label>
                             <input type="text" class="form-control @error('nomor_spd') is-invalid @enderror"
-                                   name="nomor_spd" id="nomor_spd" value="{{ old('nomor_spd') }}" autofocus required>
+                                name="nomor_spd" id="nomor_spd" value="{{ old('nomor_spd') }}" autofocus required>
                             @error('nomor_spd')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="kegiatan" class="form-label">Kegiatan</label>
                             <input type="text" class="form-control @error('kegiatan') is-invalid @enderror"
-                                   name="kegiatan" id="kegiatan" value="{{ old('kegiatan') }}" required>
+                                name="kegiatan" id="kegiatan" value="{{ old('kegiatan') }}" required>
                             @error('kegiatan')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="dari" class="form-label">Dari</label>
                             <input type="text" class="form-control @error('dari') is-invalid @enderror"
-                                   name="dari" id="dari" value="{{ old('dari') }}" required>
+                                name="dari" id="dari" value="{{ old('dari') }}" required>
                             @error('dari')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="tujuan" class="form-label">Tujuan</label>
-                            <input type="text" class="form-control @error('tujuan') is-invalid @enderror"
-                                   name="tujuan" id="tujuan" value="{{ old('tujuan') }}" required>
+                            <textarea type="text" class="form-control @error('tujuan') is-invalid @enderror" name="tujuan" id="tujuan"
+                                value="{{ old('tujuan') }}" required></textarea>
                             @error('tujuan')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
 
@@ -132,47 +123,47 @@
                         <div class="mb-3">
                             <label for="lama_tugas" class="form-label">Lama Tugas</label>
                             <input type="number" class="form-control @error('lama_tugas') is-invalid @enderror"
-                                   name="lama_tugas" id="lama_tugas" value="{{ old('lama_tugas') }}" required>
+                                name="lama_tugas" id="lama_tugas" value="{{ old('lama_tugas') }}" required>
                             @error('lama_tugas')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="tanggal" class="form-label">Tanggal ST</label>
                             <input type="date" class="form-control @error('tanggal_st') is-invalid @enderror"
-                                   name="tanggal_st" id="tanggal" value="{{ old('tanggal_st') }}" required>
+                                name="tanggal_st" id="tanggal" value="{{ old('tanggal_st') }}" required>
                             @error('tanggal_st')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="tanggal_berangkat" class="form-label">Tanggal Berangkat</label>
                             <input type="date"
-                                   class="form-control @error('tanggal_berangkat') is-invalid @enderror"
-                                   name="tanggal_berangkat" id="tanggal_berangkat"
-                                   value="{{ old('tanggal_berangkat') }}" required>
+                                class="form-control @error('tanggal_berangkat') is-invalid @enderror"
+                                name="tanggal_berangkat" id="tanggal_berangkat"
+                                value="{{ old('tanggal_berangkat') }}" required>
                             @error('tanggal_berangkat')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="tanggal_kembali" class="form-label">Tanggal Kembali</label>
                             <input type="date" class="form-control @error('tanggal_kembali') is-invalid @enderror"
-                                   name="tanggal_kembali" id="tanggal_kembali" value="{{ old('tanggal_kembali') }}"
-                                   required>
+                                name="tanggal_kembali" id="tanggal_kembali" value="{{ old('tanggal_kembali') }}"
+                                required>
                             @error('tanggal_berangkat')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
                         <div class="text-end">
@@ -184,6 +175,4 @@
             </div>
         </div>
     </div>
-
-    <script src="{{ asset('js/show-hide-password.js') }}"></script>
 </x-app-layout>
