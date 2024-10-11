@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="" method="POST">
+                    <form action="{{ route('dokumen-st.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <table class="table align-top table-borderless table-sm">
                             <tbody>
@@ -27,14 +27,20 @@
                                     <td>Dokumen</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="file" name="" id="" class="form-control">
+                                        <input type="hidden" name="sppd" value="{{ $sppd->id }}"
+                                            class="form-control" id="sppd" />
+                                        <input type="file" name="dokumen" id="dokumen"
+                                            class="form-control @error('dokumen') is-invalid @enderror" />
+                                        @error('dokumen')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
                                     </td>
                                 </tr>
                             </tbody>

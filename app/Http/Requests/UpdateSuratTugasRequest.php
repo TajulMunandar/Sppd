@@ -32,6 +32,7 @@ class UpdateSuratTugasRequest extends FormRequest
             'tanggal_st' => 'required',
             'tanggal_berangkat' => 'required',
             'tanggal_kembali' => 'required',
+            'dokumen' => ['nullable', 'sometimes', 'file', 'mimes:pdf', 'max:10240']
         ];
     }
 }

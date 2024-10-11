@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(DokumenSuratTugasController::class)->prefix('dokumen-st')
         ->name('dokumen-st.')->group(function () {
             Route::get('/{sppd}', 'index')->name('index');
+            Route::post('/store', 'store')->name('store');
         });
 
     // Buat Surat Tugas
