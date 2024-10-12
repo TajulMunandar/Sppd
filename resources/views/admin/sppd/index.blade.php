@@ -23,7 +23,8 @@
                 <i class="fa-regular fa-plus me-2"></i>
                 Tambah
             </a>
-            <a href="{{ route('sppd.export-all') }}" class="btn btn-success"><i class="fa fa-file"></i> Export</a>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#modal-switch" class="btn btn-success"><i
+                    class="fa fa-file"></i> Export</button>
 
             <div class="mt-3 card">
                 <div class="card-body">
@@ -256,6 +257,24 @@
         </div>
     </x-form_modal>
     <!-- Akhir Modal Tambah jenis -->
+
+    {{-- Modal export --}}
+    <x-modal-content-only id="modal-switch">
+        @slot('title', 'Pilih Jenis SPPD')
+        <div class="row">
+            @foreach ($jenises as $jenis)
+                <div class="col">
+                    <a href="{{ route('sppd.export-all', $jenis->id) }}">
+                        <div class="transition-shadow duration-300 shadow-lg-hover card">
+                            <div class="text-center card-body">
+                                {{ $jenis->name }}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endforeach
+        </div>
+    </x-modal-content-only>
 
     @push('css')
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />

@@ -24,3 +24,12 @@ if (!function_exists('uploadSuratTugas')) {
         return $path;
     }
 }
+
+if (!function_exists(function: 'uploadDokumen')) {
+    function uploadDokumen($file, $path)
+    {
+        $filename = Str::uuid() . '.pdf';
+        $path = $file->storeAs($path, $filename, 'public');
+        return $path;
+    }
+}

@@ -113,7 +113,7 @@ class SppdController extends Controller
 
             return redirect()->route('sppd.index')->with('success', "Data SPPD $sppd->nomor_sp2d berhasil diperbarui!");
         } catch (ValidationException $exception) {
-            return redirect()->route('sppd.index')->with('failed', 'Data gagal diperbarui! '.$exception->getMessage());
+            return redirect()->route('sppd.index')->with('failed', 'Data gagal diperbarui! ' . $exception->getMessage());
         }
     }
 
@@ -144,8 +144,8 @@ class SppdController extends Controller
         return Excel::download(new ExportSppdById($sppdId), 'sppd-data.xlsx');
     }
 
-    public function exportAll()
+    public function exportAll($jenis)
     {
-        return Excel::download(new SppdDataExport, 'Data SPPD.xlsx');
+        return Excel::download(new SppdDataExport($jenis), 'Data SPPD.xlsx');
     }
 }

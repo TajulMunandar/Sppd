@@ -1,19 +1,20 @@
 <?php
 
-use App\Http\Controllers\AkomodasiController;
-use App\Http\Controllers\CreateSuratTugasController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DokumenSuratTugasController;
-use App\Http\Controllers\JenisTugasController;
+use App\Models\Sppd;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SppdController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SppdController;
+use App\Http\Controllers\AkomodasiController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JenisTugasController;
 use App\Http\Controllers\SuratTugasController;
 use App\Http\Controllers\TiketPergiController;
-use App\Http\Controllers\TiketPulangController;
 use App\Http\Controllers\UangHarianController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TiketPulangController;
+use App\Http\Controllers\CreateSuratTugasController;
+use App\Http\Controllers\DokumenSuratTugasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,7 @@ Route::get('/', function () {
 })->middleware('guest');
 
 // Export Data Excel
-Route::get('/export-sppd', [SppdController::class, 'exportAll'])->name('sppd.export-all');
+Route::get('/export-sppd/{jenis}', [SppdController::class, 'exportAll'])->name('sppd.export-all');
 Route::post('/export-excel/{sppdId}', [SppdController::class, 'exportExcel'])->name('sppd.export');
 
 Route::middleware('auth')->group(function () {
@@ -97,7 +98,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/pulang/{sppd}/detail', [TiketPulangController::class, 'showDetail'])->name('pulang.detail');
     Route::post('/pulang/detail', [TiketPulangController::class, 'storeDetail'])->name('pulang.detailStore');
 
-    Route::put('/resetpassword/{user}', [UserController::class, 'resetPasswordAdmin'])->name('resetpassword.resetPasswordAdmin')->middleware('auth');
+    Route::put('/resetpassword/{user}', [UserController::class, 'resetPasswordAdmin'])
+        ->name('resetpassword.resetPasswordAdmin');
+
+    Route::get('/tes', function () {
+        $data = Sppd::with('pegawais.golongan', 'suratTugas', 'uangHarian', 'akomodasi', 'totalPergi', 'totalPulang')->where('jenis_tugas_id', 1)->get();
+
+        // dd($data->toArray());
+        return view('export.sppd', [
+            'title' => 'Data SPPD',
+            'sppds' => $data,
+        ]);
+    });
 });
 
 require __DIR__ . '/auth.php';

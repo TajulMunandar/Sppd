@@ -8,6 +8,7 @@ use App\Models\Akomodasi;
 use App\Models\Sppd;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class AkomodasiController extends Controller
@@ -67,12 +68,22 @@ class AkomodasiController extends Controller
 
             $validatedData = $request->validated();
             $validatedData['sppd_id'] = $akomodasi->sppd_id;
+            $validatedData['total_uang'] = $request->lama_inap != ''
+                ? $request->lama_inap * $request->harga
+                : $validatedData['harga_diskon'];
+
+            if ($request->hasFile('dokumen')) {
+                if ($akomodasi->dokumen && Storage::disk('public')->exists($akomodasi->dokumen)) {
+                    Storage::disk('public')->delete($akomodasi->dokumen);
+                }
+                $validatedData['dokumen'] = uploadDokumen($request->dokumen, 'upload/akomodasi');
+            }
 
             Akomodasi::where('id', $akomodasi->id)->update($validatedData);
 
             return redirect()->back()->with('success', "Data Akomodasi $akomodasi->name_hotel berhasil diperbarui!");
         } catch (ValidationException $exception) {
-            return redirect()->back()->with('failed', 'Data gagal diperbarui! '.$exception->getMessage());
+            return redirect()->back()->with('failed', 'Data gagal diperbarui! ' . $exception->getMessage());
         }
     }
 
@@ -82,6 +93,9 @@ class AkomodasiController extends Controller
     public function destroy(Akomodasi $akomodasi)
     {
         try {
+            if ($akomodasi->dokumen && Storage::disk('public')->exists($akomodasi->dokumen)) {
+                Storage::disk('public')->delete($akomodasi->dokumen);
+            }
             $akomodasi->delete();
             DB::statement('ALTER TABLE akomodasi AUTO_INCREMENT=1');
         } catch (QueryException $e) {
@@ -97,9 +111,10 @@ class AkomodasiController extends Controller
     public function showDetail($sppdId)
     {
         $sppd = Sppd::find($sppdId);
-        $title = 'Data Sppd Detail - Akomodasi ';
-        if (! $sppd) {
-            abort(404); // Or handle the case when the Sppd is not found
+        $title = 'Akomodasi';
+
+        if (!$sppd) {
+            abort(404, 'Tidak ditemukan data SPPD.'); // Or handle the case when the Sppd is not found
         }
 
         $akomodasis = Akomodasi::where('sppd_id', $sppdId)->get(); // Assuming there's a relationship between Sppd and SuratTugas
@@ -111,7 +126,12 @@ class AkomodasiController extends Controller
     {
         $validated = $request->validated();
         $validated['sppd_id'] = $request->sppd_id;
-        $validated['total_uang'] = $request->lama_inap != '' ? $request->lama_inap * $request->harga : $validated['harga_diskon'];
+        $validated['total_uang'] = $request->lama_inap != ''
+            ? $request->lama_inap * $request->harga
+            : $validated['harga_diskon'];
+        if ($request->hasFile('dokumen')) {
+            $validated['dokumen'] = uploadDokumen($request->dokumen, 'upload/akomodasi');
+        }
         Akomodasi::create($validated);
 
         return redirect()->back()->with('success', 'Akomodasi baru berhasil ditambahkan!');

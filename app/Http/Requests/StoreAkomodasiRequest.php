@@ -35,13 +35,15 @@ class StoreAkomodasiRequest extends FormRequest
             'bbm' => 'required',
             'dari' => 'required',
             'ke' => 'required',
+            'dokumen' => ['nullable', 'file', 'mimes:pdf', 'max:10240']
         ];
     }
 
-    public function messages()
+    public function attributes()
     {
         return [
             'name_hotel' => 'Nama hotel',
+            'dokumen' => 'Dokumen bill hotel'
         ];
     }
 

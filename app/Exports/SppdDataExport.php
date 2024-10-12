@@ -16,20 +16,27 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class SppdDataExport implements FromView, ShouldAutoSize, WithStyles
 {
     use Exportable;
+    protected $jenis;
+
+    public function __construct(int $jenis)
+    {
+        $this->jenis = $jenis;
+    }
 
     public function view(): View
     {
-        $data = Sppd::with('pegawais.golongan', 'suratTugas', 'uangHarian', 'akomodasi', 'totalPergi', 'totalPulang')->get();
+        $data = Sppd::with('pegawais.golongan', 'suratTugas', 'uangHarian', 'akomodasi', 'totalPergi', 'totalPulang')->where('jenis_tugas_id', $this->jenis)->get();
 
-        //        dd($data);
+        // dd($data->toArray());
         return view('export.sppd', [
-            'spdds' => $data,
+            'title' => 'Data SPPD',
+            'sppds' => $data,
         ]);
     }
 
     public function styles(Worksheet $sheet): void
     {
-        $sheet->getStyle('3:5')->applyFromArray([
+        $sheet->getStyle('A3:AZ5')->applyFromArray([
             'font' => [
                 'bold' => true,
             ],
@@ -44,7 +51,7 @@ class SppdDataExport implements FromView, ShouldAutoSize, WithStyles
             ],
         ]);
 
-        $sheet->getStyle('3')->applyFromArray([
+        $sheet->getStyle('A3:AZ3')->applyFromArray([
             'borders' => [
                 'outline' => [
                     'borderStyle' => Border::BORDER_THIN,
@@ -57,7 +64,7 @@ class SppdDataExport implements FromView, ShouldAutoSize, WithStyles
             ],
         ]);
 
-        $sheet->getStyle('4')->applyFromArray([
+        $sheet->getStyle('A4:AZ4')->applyFromArray([
             'borders' => [
                 'outline' => [
                     'borderStyle' => Border::BORDER_THIN,
@@ -70,7 +77,23 @@ class SppdDataExport implements FromView, ShouldAutoSize, WithStyles
             ],
         ]);
 
-        $sheet->getStyle('5')->applyFromArray([
+        $sheet->getStyle('A5:AZ5')->applyFromArray([
+            'borders' => [
+                'outline' => [
+                    'borderStyle' => Border::BORDER_THIN,
+                    'color' => ['rgb' => '000000'],
+                ],
+                'inside' => [
+                    'borderStyle' => Border::BORDER_THIN,
+                    'color' => ['rgb' => '000000'],
+                ],
+            ],
+        ]);
+        $sheet->getStyle('A6:AZ6')->applyFromArray([
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
+                'vertical' => Alignment::VERTICAL_CENTER,
+            ],
             'borders' => [
                 'outline' => [
                     'borderStyle' => Border::BORDER_THIN,

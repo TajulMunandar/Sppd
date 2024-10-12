@@ -199,6 +199,11 @@
         <tbody>
             @php
                 $i = 1;
+                $total_harian = 0;
+                $total_konsumsi = 0;
+                $total_transportasi = 0;
+                $total_representasi = 0;
+                $total_akomodasi = 0;
             @endphp
             @foreach ($sppds as $sppd)
                 @php
@@ -243,11 +248,11 @@
                         <td>{{ $sppd->akomodasi?->harga }}</td>
                         <td>{{ $sppd->akomodasi?->harga_diskon }}</td>
                         @php
-                            $total_uang =
-                                $sppd->akomodasi?->lama_inap * $sppd->akomodasi?->harga +
-                                $sppd->akomodasi?->harga_diskon;
+                            $total_akomodasi =
+                                $sppd->akomodasi?->lama_inap * $sppd->akomodasi?->harga_diskon ??
+                                $sppd->akomodasi?->harga;
                         @endphp
-                        <td align="right" data-format="Rp #,##0">{{ $total_uang }}</td>
+                        <td align="right" data-format="Rp #,##0">{{ $total_akomodasi }}</td>
                         <td align="right" data-format="Rp #,##0">{{ $sppd->akomodasi?->bbm }}</td>
                         <td>{{ $sppd->akomodasi?->dari }}</td>
                         <td>{{ $sppd->akomodasi?->ke }}</td>
@@ -273,11 +278,12 @@
                                 $total_konsumsi +
                                 $total_transportasi +
                                 $total_representasi +
-                                $total_uang +
+                                $total_akomodasi +
                                 $sppd->akomodasi?->bbm +
                                 $sppd->totalPergi?->total_harga +
                                 $sppd->totalPulang?->total_harga;
                         @endphp
+                        @dump($total)
                         <td align="right" data-format="Rp #,##0">{{ $sppd->total_biaya }}</td>
                     </tr>
                 @endforeach

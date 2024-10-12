@@ -13,6 +13,12 @@ class SuratTugas extends Model
 
     protected $fillable = ['sppd_id', 'nomor_st', 'nomor_spd', 'kegiatan', 'dari', 'tujuan', 'lama_tugas', 'tanggal_st', 'tanggal_berangkat', 'tanggal_kembali', 'dokumen'];
 
+    protected $casts = [
+        'tanggal_st' => 'date',
+        'tanggal_berangkat' => 'date',
+        'tanggal_kembali' => 'date',
+    ];
+
     public function Sppd()
     {
         return $this->belongsTo(Sppd::class, 'sppd_id');

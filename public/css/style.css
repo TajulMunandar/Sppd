@@ -237,3 +237,21 @@ btn
     font-weight: 400;
     transition: ease-in 0.2s;
 }
+
+.duration-300 {
+    transition-duration: .3s;
+}
+
+.transition-shadow {
+    transition-property: box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+.shadow-lg-hover:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.shadow-lg-hover:hover .card-body {
+    font-weight: 700;
+}
