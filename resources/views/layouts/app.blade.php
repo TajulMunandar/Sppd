@@ -68,7 +68,7 @@
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <div class="row">
                             <div class="col">
-                                <h1 class="mb-2 fw-bold fs-2">{{ $subtitle ?: $title }}</h1>
+                                <h1 class="mb-3 fw-bold fs-2">{{ $subtitle ?: $title }}</h1>
                             </div>
                         </div>
                         <main>
