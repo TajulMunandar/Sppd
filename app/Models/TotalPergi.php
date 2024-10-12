@@ -11,7 +11,7 @@ class TotalPergi extends Model
 
     protected $table = 'total_pergi';
 
-    protected $fillable = ['sppd_id', 'asal', 'maskapai', 'tujuan', 'tgl_penerbangan', 'no_penerbangan', 'booking_reference', 'no_eticket', 'total_harga'];
+    protected $fillable = ['sppd_id', 'asal', 'maskapai', 'tujuan', 'tgl_penerbangan', 'no_penerbangan', 'booking_reference', 'no_eticket', 'total_harga', 'dokumen'];
 
     protected $casts = [
         'tgl_penerbangan' => 'date',

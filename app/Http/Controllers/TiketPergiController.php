@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTotalPergiRequest;
+use Exception;
 use App\Models\Sppd;
 use App\Models\TotalPergi;
-use Exception;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\TiketPergiRequest;
+use App\Http\Requests\StoreTotalPergiRequest;
 use Illuminate\Validation\ValidationException;
 
 class TiketPergiController extends Controller
@@ -64,31 +67,21 @@ class TiketPergiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TotalPergi $pergi)
+    public function update(TiketPergiRequest $request, TotalPergi $pergi)
     {
-        try {
-            $rules = [
-                'asal' => 'required',
-                'tujuan' => 'required',
-                'tgl_penerbangan' => 'required',
-                'maskapai' => 'required',
-                'booking_reference' => 'required',
-                'no_eticket' => 'required',
-                'no_penerbangan' => 'required',
-                'total_harga' => 'required',
-            ];
+        $validatedData = $request->validated();
+        $validatedData['sppd_id'] = $pergi->sppd_id;
 
-            unset($rules['sppd_id']);
-
-            $validatedData = $this->validate($request, $rules);
-            $validatedData['sppd_id'] = $pergi->sppd_id;
-
-            TotalPergi::where('id', $pergi->id)->update($validatedData);
-
-            return redirect()->back()->with('success', "Data Tiket Pergi $pergi->asal berhasil diperbarui!");
-        } catch (ValidationException $exception) {
-            return redirect()->back()->with('failed', 'Data gagal diperbarui! '.$exception->getMessage());
+        if ($request->hasFile('dokumen')) {
+            if ($pergi->dokumen && Storage::disk('public')->exists($pergi->dokumen)) {
+                Storage::disk('public')->delete($pergi->dokumen);
+            }
+            $validatedData['dokumen'] = uploadDokumen($request->dokumen, 'upload/tiket_pergi');
         }
+
+        $pergi->update($validatedData);
+
+        return redirect()->back()->with('success', "Data Tiket Pergi $pergi->asal berhasil diperbarui!");
     }
 
     /**
@@ -97,7 +90,11 @@ class TiketPergiController extends Controller
     public function destroy(TotalPergi $pergi)
     {
         try {
-            TotalPergi::destroy($pergi->id);
+            if ($pergi->dokumen && Storage::disk('public')->exists($pergi->dokumen)) {
+                Storage::disk('public')->delete($pergi->dokumen);
+            }
+            $pergi->delete();
+            DB::statement('ALTER TABLE total_pergi AUTO_INCREMENT=1');
         } catch (QueryException $e) {
             if ($e->getCode() == 23000) {
                 //SQLSTATE[23000]: Integrity constraint violation
@@ -112,8 +109,8 @@ class TiketPergiController extends Controller
     {
         $sppd = Sppd::find($sppdId);
         $title = 'Data Sppd Detail - Tiket Pergi';
-        if (! $sppd) {
-            abort(404); // Or handle the case when the Sppd is not found
+        if (!$sppd) {
+            abort(404, 'Tidak ditemukan data SPPD.'); // Or handle the case when the Sppd is not found
         }
 
         $pergis = TotalPergi::where('sppd_id', $sppdId)->get(); // Assuming there's a relationship between Sppd and SuratTugas
@@ -121,22 +118,11 @@ class TiketPergiController extends Controller
         return view('admin.sppd.total_pergi.show', compact('pergis', 'title', 'sppd'));
     }
 
-    public function storeDetail(Request $request)
+    public function storeDetail(TiketPergiRequest $request)
     {
-        try {
-            $validatedData = $request->validate([
-                'sppd_id' => 'required',
-                'asal' => 'required',
-                'tujuan' => 'required',
-                'tgl_penerbangan' => 'required',
-                'maskapai' => 'required',
-                'booking_reference' => 'required',
-                'no_eticket' => 'required',
-                'no_penerbangan' => 'required',
-                'total_harga' => 'required',
-            ]);
-        } catch (ValidationException $exception) {
-            return redirect()->back()->with('failed', $exception->getMessage());
+        $validatedData = $request->validated();
+        if ($request->hasFile('dokumen')) {
+            $validatedData['dokumen'] = uploadDokumen($request->dokumen, 'upload/tiket_pergi');
         }
 
         TotalPergi::create($validatedData);
