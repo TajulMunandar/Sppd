@@ -56,6 +56,7 @@
                                 <th>No Eticket</th>
                                 <th>No Penerbangan</th>
                                 <th>Total Harga</th>
+                                <th>Bukti Tiket</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -71,6 +72,16 @@
                                     <td>{{ $pulang->no_eticket }}</td>
                                     <td>{{ $pulang->no_penerbangan }}</td>
                                     <td>Rp. {{ number_format($pulang->total_harga, 0, ',', '.') }}</td>
+                                    <td class="text-center">
+                                        @if ($pulang->dokumen)
+                                            <a href="{{ asset('storage/' . $pulang->dokumen) }}" target="_blank">
+                                                <img src="{{ asset('icons/pdf.svg') }}" alt="file-{{ $pulang->id }}"
+                                                    width="40">
+                                            </a>
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
                                     <td>
                                         <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                             data-bs-target="#editSppd{{ $loop->iteration }}">
@@ -192,7 +203,8 @@
                                             <input type="text"
                                                 class="form-control @error('total_harga') is-invalid @enderror"
                                                 name="total_harga" id="total_harga"
-                                                value="{{ old('total_harga', $pulang->total_harga) }}" required>
+                                                value="{{ old('total_harga', number_format($pulang->total_harga, 0, ',', '.')) }}"
+                                                required>
                                         </div>
                                         @error('total_harga')
                                             <div class="invalid-feedback">

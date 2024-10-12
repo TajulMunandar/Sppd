@@ -74,7 +74,7 @@ class TiketPulangController extends Controller
     public function update(TiketPulangRequest $request, TotalPulang $pulang)
     {
         try {
-            $validatedData = $this->validated();
+            $validatedData = $request->validated();
             if ($request->hasFile('dokumen')) {
                 if ($pulang->dokumen && Storage::disk('public')->exists($pulang->dokumen)) {
                     Storage::disk('public')->delete($pulang->dokumen);
@@ -97,7 +97,11 @@ class TiketPulangController extends Controller
     public function destroy(TotalPulang $pulang)
     {
         try {
-            TotalPulang::destroy($pulang->id);
+            if ($pulang->dokumen && Storage::disk('public')->exists($pulang->dokumen)) {
+                Storage::disk('public')->delete($pulang->dokumen);
+            }
+            $pulang->delete();
+            DB::statement('ALTER TABLE total_pulang AUTO_INCREMENT=1');
         } catch (QueryException $e) {
             if ($e->getCode() == 23000) {
                 //SQLSTATE[23000]: Integrity constraint violation
