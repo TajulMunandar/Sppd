@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTotalPulangRequest;
+use Exception;
 use App\Models\Sppd;
 use App\Models\TotalPulang;
-use Exception;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\TiketPulangRequest;
+use App\Http\Requests\StoreTotalPulangRequest;
 use Illuminate\Validation\ValidationException;
 
 class TiketPulangController extends Controller
@@ -69,30 +71,23 @@ class TiketPulangController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TotalPulang $pulang)
+    public function update(TiketPulangRequest $request, TotalPulang $pulang)
     {
         try {
-            $rules = [
-                'asal' => 'required',
-                'tujuan' => 'required',
-                'tgl_penerbangan' => 'required',
-                'maskapai' => 'required',
-                'booking_reference' => 'required',
-                'no_eticket' => 'required',
-                'no_penerbangan' => 'required',
-                'total_harga' => 'required',
-            ];
-
-            unset($rules['sppd_id']);
-
-            $validatedData = $this->validate($request, $rules);
+            $validatedData = $this->validated();
+            if ($request->hasFile('dokumen')) {
+                if ($pulang->dokumen && Storage::disk('public')->exists($pulang->dokumen)) {
+                    Storage::disk('public')->delete($pulang->dokumen);
+                }
+                $validatedData['dokumen'] = uploadDokumen($request->dokumen, 'upload/tiket_pulang');
+            }
             $validatedData['sppd_id'] = $pulang->sppd_id;
 
-            TotalPulang::where('id', $pulang->id)->update($validatedData);
+            $pulang->update($validatedData);
 
             return redirect()->back()->with('success', "Data Tiket Pulang $pulang->asal berhasil diperbarui!");
         } catch (ValidationException $exception) {
-            return redirect()->back()->with('failed', 'Data gagal diperbarui! '.$exception->getMessage());
+            return redirect()->back()->with('failed', 'Data gagal diperbarui! ' . $exception->getMessage());
         }
     }
 
@@ -117,8 +112,8 @@ class TiketPulangController extends Controller
     {
         $sppd = Sppd::find($sppdId);
         $title = 'Data Sppd Detail - Tiket Pulang';
-        if (! $sppd) {
-            abort(404); // Or handle the case when the Sppd is not found
+        if (!$sppd) {
+            abort(404, 'Tidak ditemukan data SPPD.'); // Or handle the case when the Sppd is not found
         }
 
         $pulangs = TotalPulang::where('sppd_id', $sppdId)->get(); // Assuming there's a relationship between Sppd and SuratTugas
@@ -126,20 +121,14 @@ class TiketPulangController extends Controller
         return view('admin.sppd.total_pulang.show', compact('pulangs', 'title', 'sppd'));
     }
 
-    public function storeDetail(Request $request)
+    public function storeDetail(TiketPulangRequest $request)
     {
         try {
-            $validatedData = $request->validate([
-                'sppd_id' => 'required',
-                'asal' => 'required',
-                'tujuan' => 'required',
-                'tgl_penerbangan' => 'required',
-                'maskapai' => 'required',
-                'booking_reference' => 'required',
-                'no_eticket' => 'required',
-                'no_penerbangan' => 'required',
-                'total_harga' => 'required',
-            ]);
+            $validatedData = $request->validated();
+            $validatedData['sppd_id'] = $request->sppd_id;
+            if ($request->hasFile('dokumen')) {
+                $validatedData['dokumen'] = uploadDokumen($request->dokumen, 'upload/tiket_pulang');
+            }
         } catch (ValidationException $exception) {
             return redirect()->back()->with('failed', $exception->getMessage());
         }

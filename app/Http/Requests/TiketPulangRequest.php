@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TiketPergiRequest extends FormRequest
+class TiketPulangRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,6 @@ class TiketPergiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sppd_id' => 'required',
             'asal' => 'required',
             'tujuan' => 'required',
             'tgl_penerbangan' => 'nullable',
@@ -30,7 +29,7 @@ class TiketPergiRequest extends FormRequest
             'booking_reference' => 'nullable',
             'no_eticket' => 'nullable',
             'no_penerbangan' => 'nullable',
-            'total_harga' => 'required|numeric',
+            'total_harga' => 'required',
             'dokumen' => ['nullable', 'file', 'mimes:pdf', 'max:10240']
         ];
     }
@@ -38,21 +37,22 @@ class TiketPergiRequest extends FormRequest
     public function attributes()
     {
         return [
-            'sppd_id' => 'SPPD',
+            'asal' => 'Asal',
+            'tujuan' => 'Tujuan',
             'tgl_penerbangan' => 'Tgl. Penerbangan',
-            'maskapai' => 'Maskapai penerbangan',
+            'maskapai' => 'Maskapai',
             'booking_reference' => 'Booking Reference',
             'no_eticket' => 'No. E-Ticket',
             'no_penerbangan' => 'No. Penerbangan',
             'total_harga' => 'Total Harga',
-            'dokumen' => 'Bukti tiket'
+            'dokumen' => 'Bukti tiket',
         ];
     }
 
     public function prepareForValidation()
     {
         return $this->merge([
-            'total_harga' => str_replace('.', '', $this->input('total_harga')),
+            'total_harga' => str_replace('.', '', $this->input('total_harga'))
         ]);
     }
 }
