@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ApiTokenController;
 use App\Models\Sppd;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SppdController;
@@ -68,6 +69,7 @@ Route::middleware('auth')->group(function () {
         ->prefix('surat-tugas')->name('surat-tugas.')
         ->group(function () {
             Route::get('/', 'index')->name('index');
+            Route::post('/print', 'print')->name('print');
         });
 
     // uang
@@ -101,15 +103,11 @@ Route::middleware('auth')->group(function () {
     Route::put('/resetpassword/{user}', [UserController::class, 'resetPasswordAdmin'])
         ->name('resetpassword.resetPasswordAdmin');
 
-    Route::get('/tes', function () {
-        $data = Sppd::with('pegawais.golongan', 'suratTugas', 'uangHarian', 'akomodasi', 'totalPergi', 'totalPulang')->where('jenis_tugas_id', 1)->get();
-
-        // dd($data->toArray());
-        return view('export.sppd', [
-            'title' => 'Data SPPD',
-            'sppds' => $data,
-        ]);
-    });
+    Route::controller(ApiTokenController::class)->prefix('api-token')->name('api-token.')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/{api}/edit', 'edit')->name('edit');
+        });
 });
 
 require __DIR__ . '/auth.php';

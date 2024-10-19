@@ -46,6 +46,12 @@
                     <div data-i18n="Analytics">User</div>
                 </a>
             </li>
+            <li class="menu-item {{ routeActive('api-token.*') }}">
+                <a href="{{ route('api-token.index') }}" class="menu-link">
+                    <i class="fa-duotone fa-database me-3"></i>
+                    <div data-i18n="Analytics">API Token</div>
+                </a>
+            </li>
         @else
             <li class="menu-item {{ Request::is('dashboard') ? 'active' : '' }}">
                 <a href="/dashboard" class="menu-link">

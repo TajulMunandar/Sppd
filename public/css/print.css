@@ -1,0 +1,125 @@
+body {
+    margin: 0;
+    box-sizing: border-box;
+    background-color: '#ccc';
+    text-align: center;
+    font-family: "Playfair Display", serif;
+    font-size: 14px;
+}
+
+table {
+    border-collapse: collapse;
+    background-color: white;
+    padding: 1em 3em;
+    width: 100%;
+}
+
+table tr.header {
+    margin: 0 2em;
+}
+
+.table {
+    width: 100%;
+}
+
+.table-bordered thead tr th {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.table-bordered tbody tr td {
+    border-right: 1px solid black;
+    padding: 5px;
+}
+
+.table-bordered tbody tr {
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.table-bordered tbody tr:last-child {
+    border-top: none;
+    border-bottom: 1px solid black;
+}
+
+thead tr.tfooter {
+    font-size: 85%;
+    text-align: center;
+}
+
+h1 {
+    font-size: 54px;
+}
+
+h2 {
+    font-size: 48px;
+}
+
+h3 {
+    font-size: 40px;
+}
+
+h4 {
+    font-size: 32px;
+}
+
+h5 {
+    font-size: 24px;
+}
+
+h6 {
+    font-size: 18px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.garis {
+    margin-top: 1em;
+    border-top: 3px solid black;
+    height: 2px;
+    border-bottom: 1px solid black;
+}
+
+.title {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.title h6 {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.nomor__agenda {
+    min-width: 30px;
+    display: inline-block;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+ol {
+    padding-inline-start: 10px;
+}
+
+ol li.no-marker {
+    display: block;
+}
+
+.text-left {
+    text-align: left;
+}

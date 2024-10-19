@@ -33,3 +33,11 @@ if (!function_exists(function: 'uploadDokumen')) {
         return $path;
     }
 }
+
+if (!function_exists('romawi')) {
+    function romawi($number)
+    {
+        $romawi = [1 => 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+        return $romawi[$number];
+    }
+}

@@ -14,6 +14,7 @@ class Golongan extends Model
     protected $table = 'golongan';
 
     protected $fillable = ['kode', 'nama'];
+    protected $append = ['lengkap', 'pangkat_jabatan'];
 
     public function pegawais(): HasMany
     {
@@ -23,7 +24,13 @@ class Golongan extends Model
     public function lengkap(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->attributes['kode'].' '.$this->attributes['nama'],
+            get: fn($value) => $this->attributes['kode'] . ' ' . $this->attributes['nama'],
+        );
+    }
+    public function pangkatJabatan(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->attributes['nama'] . ' (' . $this->attributes['kode'] . ')',
         );
     }
 }
