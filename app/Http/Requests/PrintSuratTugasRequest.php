@@ -23,17 +23,32 @@ class PrintSuratTugasRequest extends FormRequest
     {
         return [
             'pegawai' => ['required'],
+            'perihal' => ['required', 'string', 'max:250'],
             'tujuan' => ['required', 'string', 'max:200'],
+            'lama_kegiatan' => ['required', 'numeric'],
             'bulan' => ['required', 'string', 'max:10'],
             'tahun' => ['required', 'numeric', 'digits:4'],
-            'nd' => ['nullable']
+            'nd' => ['nullable'],
+            'nomor_nd' => ['nullable', 'required_if:nd,1', 'string', 'max:200'],
+            'tanggal_nd' => ['nullable', 'required_if:nd,1'],
         ];
     }
 
     public function attributes()
     {
         return [
-            'nd' => 'Notadinas'
+            'lama_kegiatan' => 'Lama kegiatan',
+            'nd' => 'Notadinas',
+            'nomor_nd' => 'Nomor nota dinas',
+            'tanggal_nd' => 'Tanggal nota dinas',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'nomor_nd.required_if' => ':Attribute wajib diisi jika dinotadinaskan',
+            'tanggal_nd.required_if' => ':Attribute wajib diisi jika dinotadinaskan',
         ];
     }
 }
