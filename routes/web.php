@@ -1,21 +1,20 @@
 <?php
 
 use App\Http\Controllers\Admin\ApiTokenController;
-use App\Models\Sppd;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SppdController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\AkomodasiController;
+use App\Http\Controllers\CreateSuratTugasController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DokumenSuratTugasController;
+use App\Http\Controllers\JenisTugasController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AkomodasiController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\JenisTugasController;
+use App\Http\Controllers\SppdController;
 use App\Http\Controllers\SuratTugasController;
 use App\Http\Controllers\TiketPergiController;
-use App\Http\Controllers\UangHarianController;
 use App\Http\Controllers\TiketPulangController;
-use App\Http\Controllers\CreateSuratTugasController;
-use App\Http\Controllers\DokumenSuratTugasController;
+use App\Http\Controllers\UangHarianController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -110,4 +109,4 @@ Route::middleware('auth')->group(function () {
         });
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
