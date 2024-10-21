@@ -179,7 +179,7 @@
                                     <tbody>
                                         <tr>
                                             <td>1.</td>
-                                            <td style="width: 100px">Tiba di</td>
+                                            <td style="width: 110px">Tiba di</td>
                                             <td>:</td>
                                             <td>{{ $data['tujuan'] }}</td>
                                         </tr>
@@ -197,7 +197,7 @@
                                     <tbody>
                                         <tr>
                                             <td>2.</td>
-                                            <td style="width: 100px">Berangkat dari</td>
+                                            <td style="width: 110px">Berangkat dari</td>
                                             <td>:</td>
                                             <td>{{ $data['tujuan'] }}</td>
                                         </tr>

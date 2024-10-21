@@ -155,6 +155,11 @@ ol li.no-marker {
     display: block;
 }
 
+li:not(:has(.no-marker)) {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
 .text-left {
     text-align: left;
 }
