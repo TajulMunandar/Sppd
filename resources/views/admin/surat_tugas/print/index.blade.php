@@ -68,9 +68,8 @@
                 <td colspan="2">
                     <div class="title">
                         <h6 class="uppercase">Surat Tugas</h6>
-                        <p>Nomor : 090/<span class="nomor__agenda"></span>/ST/<span
-                                class="fw-bold">{{ romawi($data['bulan']) }}</span>/<span
-                                class="fw-bold">{{ $data['tahun'] }}</span>
+                        <p>Nomor : 090/<span
+                                class="nomor__agenda"></span>/ST/{{ romawi($data['bulan']) }}/{{ $data['tahun'] }}
                         </p>
                     </div>
                     <div class="isi">
@@ -92,7 +91,7 @@
                                             <th>3</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="fw-bold">
+                                    <tbody>
                                         @foreach ($pegawais as $pegawai)
                                             <tr>
                                                 <td class="text-center">{{ $loop->iteration }}</td>
@@ -118,22 +117,19 @@
                                     <tr>
                                         <td style="width: 10%">Untuk</td>
                                         <td style="width: 2%">:</td>
-                                        <td><span class="fw-bold">{{ $data['perihal'] }}</span></td>
+                                        <td>{{ $data['perihal'] }}</td>
                                     </tr>
                                     <tr>
                                         <td style="width: 10%">Di</td>
                                         <td style="width: 2%">:</td>
-                                        <td><span class="fw-bold">{{ $data['tujuan'] }}</span></td>
+                                        <td>{{ $data['tujuan'] }}</td>
                                     </tr>
                                     <tr>
                                         <td style="width: 10%">Lamanya</td>
                                         <td style="width: 2%">:</td>
                                         <td>
-                                            <span class="fw-bold">
-                                                {{ $data['lama_kegiatan'] }} ({{ hitung($data['lama_kegiatan']) }})
-                                                hari
-                                                kerja
-                                            </span>
+                                            {{ $data['lama_kegiatan'] }} ({{ hitung($data['lama_kegiatan']) }})
+                                            hari kerja
                                         </td>
                                     </tr>
                                     <tr>
@@ -142,7 +138,7 @@
                                         <td>
                                             Segala biaya akibat dikeluarkannya surat tugas ini, dibebankan pada DPA/DPPA
                                             Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Aceh Barat Tahun Anggaran
-                                            <span class="fw-bold">{{ $data['tahun'] }}</span>
+                                            {{ $data['tahun'] }}
                                         </td>
                                     </tr>
                                 </table>
@@ -157,12 +153,16 @@
                                 <tr>
                                     <td>
                                         <div class="identitas">
-                                            <p class="mb-1">Meulaboh, <span class="fw-bold">21 Agustus 2024</span></p>
+                                            <p class="mb-1">Meulaboh, <span class="tanggal__surat">01 Januari
+                                                    2024</span></p>
                                             <p class="mb-1 uppercase">Kepala Dinas Pekerjaan Umum dan <br>
                                                 Penataan Ruang Kabupaten Aceh Barat</p>
-                                            <p class="nama text-underline">Dr. Ir. KURDI, ST., MT</p>
-                                            <p class="mt-1 fw-bold">Pembina TK.I</p>
-                                            <p class="fw-bold">NIP. 19760612 200504 1 00 1</p>
+                                            <p class="nama text-underline">
+                                                {{ $data['nd'] ? $data['pelaksana'] : 'Dr. Ir. KURDI, ST., MT' }}
+                                            </p>
+                                            <p class="mt-1">{{ $data['nd'] ? $data['golongan'] : 'Pembina TK.I' }}
+                                            </p>
+                                            <p>NIP. {{ $data['nd'] ? $data['nip'] : '19760612 200504 1 00 1' }}</p>
                                             @if ($data['nd'])
                                                 <p class="fw-bold">Nota Dinas : {{ $data['nomor_nd'] }}</p>
                                                 <p class="fw-bold">Tanggal : {{ $data['tanggal_nd'] }}</p>
@@ -181,13 +181,13 @@
                                             <td>1.</td>
                                             <td style="width: 100px">Tiba di</td>
                                             <td>:</td>
-                                            <td class="fw-bold">Aula Cut Nyak Dhien</td>
+                                            <td>{{ $data['tujuan'] }}</td>
                                         </tr>
                                         <tr>
                                             <td></td>
                                             <td>Pada tanggal</td>
                                             <td>:</td>
-                                            <td class="fw-bold">22 Agustus 2024</td>
+                                            <td></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -199,19 +199,19 @@
                                             <td>2.</td>
                                             <td style="width: 100px">Berangkat dari</td>
                                             <td>:</td>
-                                            <td class="fw-bold">Aula Cut Nyak Dhien</td>
+                                            <td>{{ $data['tujuan'] }}</td>
                                         </tr>
                                         <tr>
                                             <td></td>
                                             <td>Ke</td>
                                             <td>:</td>
-                                            <td class="fw-bold">Dinas PUPR Aceh Barat</td>
+                                            <td>Dinas PUPR Aceh Barat</td>
                                         </tr>
                                         <tr>
                                             <td></td>
                                             <td>Pada tanggal</td>
                                             <td>:</td>
-                                            <td class="fw-bold">22 Agustus 2024</td>
+                                            <td></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -226,9 +226,9 @@
     <script>
         const url = "{{ route('surat-tugas.index') }}";
         window.print();
-        window.onafterprint = function() {
-            window.location.href = url;
-        };
+        // window.onafterprint = function() {
+        //     window.location.href = url;
+        // };
     </script>
 </body>
 

@@ -29,6 +29,9 @@ class PrintSuratTugasRequest extends FormRequest
             'bulan' => ['required', 'string', 'max:10'],
             'tahun' => ['required', 'numeric', 'digits:4'],
             'nd' => ['nullable'],
+            'pelaksana' => ['nullable', 'required_if:nd,1', 'string', 'max:200'],
+            'nip' => ['nullable', 'required_if:nd,1', 'string', 'max:200'],
+            'golongan' => ['nullable', 'required_if:nd,1', 'string', 'max:200'],
             'nomor_nd' => ['nullable', 'required_if:nd,1', 'string', 'max:200'],
             'tanggal_nd' => ['nullable', 'required_if:nd,1'],
         ];

@@ -3,8 +3,13 @@ body {
     box-sizing: border-box;
     background-color: '#ccc';
     text-align: center;
-    font-family: 'Bookman Old Style', "Playfair Display", serif;
-    font-size: 14px;
+    font-family: 'Crimson Pro', "Playfair Display", serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+main {
+    font-size: 17px;
 }
 
 table {
@@ -20,6 +25,10 @@ table tr.header {
 
 .table {
     width: 100%;
+}
+
+table:not(:has(.table-bordered)) td {
+    vertical-align: top;
 }
 
 .table-bordered thead tr th {
@@ -43,33 +52,44 @@ table tr.header {
     border-bottom: 1px solid black;
 }
 
-thead tr.tfooter {
+
+.tfooter th {
     font-size: 85%;
-    text-align: center;
+    font-weight: 400;
+    font-style: italic;
 }
 
 h1 {
-    font-size: 54px;
+    font-size: 56px;
 }
 
 h2 {
-    font-size: 48px;
+    font-size: 50px;
 }
 
 h3 {
-    font-size: 40px;
+    font-size: 42px;
 }
 
 h4 {
-    font-size: 32px;
+    font-size: 36px;
 }
 
 h5 {
-    font-size: 24px;
+    font-size: 28px;
 }
 
 h6 {
-    font-size: 18px;
+    font-size: 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
 }
 
 h1,
@@ -80,6 +100,10 @@ h5,
 h6,
 p {
     margin: 0;
+}
+
+.fw-bold {
+    font-weight: 700;
 }
 
 .text-center {
@@ -113,7 +137,17 @@ p {
 }
 
 ol {
-    padding-inline-start: 10px;
+    /*padding-inline-start: -20px;*/
+    list-style-position: outside;
+}
+
+ol li {
+    margin-bottom: 1em;
+    padding-left: 10px;
+}
+
+ol li::marker {
+    padding-left: -10px;
 }
 
 ol li.no-marker {
@@ -122,4 +156,63 @@ ol li.no-marker {
 
 .text-left {
     text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-underline {
+    text-decoration: underline;
+}
+
+.pb-0 {
+    padding-bottom: 0px;
+}
+
+.pt-0 {
+    padding-top: 0px;
+}
+
+td.pb-0 {
+    padding-bottom: 0px !important;
+}
+
+td.pt-0 {
+    padding-top: 0px !important;
+}
+
+.mt-1 {
+    margin-top: 0.25rem;
+}
+
+.signature {
+    margin-top: 50px;
+}
+
+.signature .identitas {
+    margin-left: 350px;
+}
+
+p.nama {
+    margin-top: 60px;
+    text-underline-offset: 4px;
+}
+
+.container {
+    margin-top: 40px;
+    display: flex;
+}
+
+.kotak {
+    width: 50%;
+    min-height: 50px;
+    border: 1px solid black;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+.kotak:not(:first-child) {
+    border-left: none !important;
 }

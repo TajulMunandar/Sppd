@@ -77,15 +77,46 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="mb-3" id="nomor" style="{{ old('nd') == 1 ? '' : 'display: none' }}">
+                                {{-- Hidden Input --}}
+                                <div class="mb-3" id="pelaksana" style="{{ old('nd') == 1 ? '' : 'display: none' }}">
+                                    <label for="pelaksana" class="form-label">Pelaksana Nota Dinas</label>
+                                    <input type="text" name="pelaksana" id="pelaksana"
+                                        value="{{ old('pelaksana') }}" placeholder="Nama lengkap pegawai"
+                                        class="form-control @error('pelaksana') is-invalid @enderror">
+                                    @error('pelaksana')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3" id="nip" style="{{ old('nd') == 1 ? '' : 'display: none' }}">
+                                    <label for="nip" class="form-label">NIP</label>
+                                    <input type="text" name="nip" id="nip" value="{{ old('nip') }}"
+                                        class="form-control @error('nip') is-invalid @enderror">
+                                    @error('nip')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3" id="nomor"
+                                    style="{{ old('nd') == 1 ? '' : 'display: none' }}">
                                     <label for="nomor_nd" class="form-label">Nomor ND</label>
-                                    <input type="text" name="nomor_nd" id="nomor_nd" value="{{ old('nomor_nd') }}"
+                                    <input type="text" name="nomor_nd" id="nomor_nd"
+                                        value="{{ old('nomor_nd') }}"
                                         class="form-control @error('nomor_nd') is-invalid @enderror">
                                     @error('nomor_nd')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="mb-3" id="tanggal" style="{{ old('nd') == 1 ? '' : 'display: none' }}">
+                                <div class="mb-3" id="golongan"
+                                    style="{{ old('nd') == 1 ? '' : 'display: none' }}">
+                                    <label for="golongan" class="form-label">Pangkat/Golongan</label>
+                                    <input type="text" name="golongan" id="golongan"
+                                        value="{{ old('golongan') }}"
+                                        class="form-control @error('golongan') is-invalid @enderror">
+                                    @error('golongan')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3" id="tanggal"
+                                    style="{{ old('nd') == 1 ? '' : 'display: none' }}">
                                     <label for="tanggal_nd" class="form-label">Tanggal ND</label>
                                     <input type="date" name="tanggal_nd" id="tanggal_nd"
                                         value="{{ old('tanggal_nd') }}"
@@ -147,9 +178,15 @@
 
                 nota.on('change', () => {
                     if (nota.is(':checked')) {
+                        $('#pelaksana').show();
+                        $('#nip').show();
+                        $('#golongan').show();
                         $('#nomor').show();
                         $('#tanggal').show();
                     } else {
+                        $('#pelaksana').hide();
+                        $('#nip').hide();
+                        $('#golongan').hide();
                         $('#nomor').hide();
                         $('#tanggal').hide();
                     }
