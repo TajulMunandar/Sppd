@@ -34,6 +34,7 @@ table:not(:has(.table-bordered)) td {
 .table-bordered thead tr th {
     border: 1px solid black;
     padding: 5px;
+    font-weight: 500;
 }
 
 .table-bordered tbody tr td {
@@ -215,4 +216,8 @@ p.nama {
 
 .kotak:not(:first-child) {
     border-left: none !important;
+}
+
+.tanggal__surat {
+    opacity: 0;
 }
