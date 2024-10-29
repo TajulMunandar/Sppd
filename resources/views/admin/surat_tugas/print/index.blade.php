@@ -1,3 +1,6 @@
+@php
+    use Carbon\Carbon;
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -101,7 +104,7 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <p class="mb-1">
-                                                        {{ $pegawai['latest_pangkat'] ? $pegawai['latest_pangkat']['golongan']['nama'] : '-' }}
+                                                        {{ $pegawai['latest_pangkat'] ? $pegawai['latest_pangkat']['golongan']['nama'] . ' (' . $pegawai['latest_pangkat']['golongan']['kode'] . ')' : '-' }}
                                                     </p>
                                                     <p class="mb-0">
                                                         {{ $pegawai['latest_jabatan'] ? $pegawai['latest_jabatan']['nama_jabatan'] : '-' }}
@@ -123,6 +126,14 @@
                                         <td style="width: 10%">Di</td>
                                         <td style="width: 2%">:</td>
                                         <td>{{ $data['tujuan'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 10%"></td>
+                                        <td style="width: 2%"></td>
+                                        <td>
+                                            Pada tanggal
+                                            {{ $data['tgl_pulang'] ? Carbon::parse($data['tgl_berangkat'])->translatedFormat('d F') . ' - ' . Carbon::parse($data['tgl_pulang'])->translatedFormat('d F Y') : Carbon::parse($data['tgl_berangkat'])->translatedFormat('d F Y') }}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td style="width: 10%">Lamanya</td>
@@ -153,8 +164,8 @@
                                 <tr>
                                     <td>
                                         <div class="identitas">
-                                            <p class="mb-1">Meulaboh, <span class="tanggal__surat">01 Januari
-                                                    2024</span></p>
+                                            <p class="mb-1">Meulaboh, <span class="spacing"></span>
+                                                {{ Carbon::parse($data['tgl_surat'])->translatedFormat('F Y') }}</p>
                                             <p class="mb-1 uppercase">Kepala Dinas Pekerjaan Umum dan <br>
                                                 Penataan Ruang Kabupaten Aceh Barat</p>
                                             <p class="nama text-underline">
@@ -181,13 +192,13 @@
                                             <td>1.</td>
                                             <td style="width: 110px">Tiba di</td>
                                             <td>:</td>
-                                            <td>{{ $data['tujuan'] }}</td>
+                                            <td class="hidden">{{ $data['tujuan'] }}</td>
                                         </tr>
                                         <tr>
                                             <td></td>
                                             <td>Pada tanggal</td>
                                             <td>:</td>
-                                            <td></td>
+                                            <td class="hidden"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -199,15 +210,15 @@
                                             <td>2.</td>
                                             <td style="width: 110px">Berangkat dari</td>
                                             <td>:</td>
-                                            <td>{{ $data['tujuan'] }}</td>
+                                            <td class="hidden">{{ $data['tujuan'] }}</td>
                                         </tr>
                                         <tr>
                                             <td></td>
                                             <td>Ke</td>
                                             <td>:</td>
-                                            <td>Dinas PUPR Aceh Barat</td>
+                                            <td class="hidden">Dinas PUPR Aceh Barat</td>
                                         </tr>
-                                        <tr>
+                                        <tr style="height: 150px">
                                             <td></td>
                                             <td>Pada tanggal</td>
                                             <td>:</td>

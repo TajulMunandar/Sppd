@@ -51,6 +51,9 @@ class CreateSuratTugasController extends Controller
                 'nip' => $request->nip,
                 'golongan' => $request->golongan,
                 'nomor_nd' => $request->nomor_nd,
+                'tgl_berangkat' => $request->tgl_berangkat,
+                'tgl_pulang' => $request->tgl_pulang,
+                'tgl_surat' => $request->tgl_surat,
                 'tanggal_nd' => Carbon::parse($request->tanggal_nd)->translatedFormat('d F Y'),
             ];
 

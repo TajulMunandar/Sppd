@@ -35,6 +35,26 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3">
+                                    <label for="tgl_berangkat" class="form-label">Tanggal Berangkat</label>
+                                    <input type="date" name="tgl_berangkat" id="tgl_berangkat"
+                                        value="{{ old('tgl_berangkat') }}"
+                                        class="form-control @error('tgl_berangkat') is-invalid @enderror"
+                                        placeholder="Tempat kegiatan">
+                                    @error('tgl_berangkat')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="tgl_pulang" class="form-label">Tanggal Pulang</label>
+                                    <input type="date" name="tgl_pulang" id="tgl_pulang"
+                                        value="{{ old('tgl_pulang') }}"
+                                        class="form-control @error('tgl_pulang') is-invalid @enderror"
+                                        placeholder="Tempat kegiatan">
+                                    @error('tgl_pulang')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
                                     <label for="lama_kegiatan" class="form-label">Lama Kegiatan</label>
                                     <div class="input-group">
                                         <input type="number" min="0" step="1" name="lama_kegiatan"
@@ -43,6 +63,15 @@
                                         <div class="input-group-text">Hari Kerja</div>
                                     </div>
                                     @error('lama_kegiatan')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="tgl_surat" class="form-label">Tanggal Surat</label>
+                                    <input type="date" name="tgl_surat" id="tgl_surat"
+                                        value="{{ old('tgl_surat') }}"
+                                        class="form-control @error('tgl_surat') is-invalid @enderror">
+                                    @error('tgl_surat')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -78,7 +107,8 @@
                                     @enderror
                                 </div>
                                 {{-- Hidden Input --}}
-                                <div class="mb-3" id="pelaksana" style="{{ old('nd') == 1 ? '' : 'display: none' }}">
+                                <div class="mb-3" id="pelaksana"
+                                    style="{{ old('nd') == 1 ? '' : 'display: none' }}">
                                     <label for="pelaksana" class="form-label">Pelaksana Nota Dinas</label>
                                     <input type="text" name="pelaksana" id="pelaksana"
                                         value="{{ old('pelaksana') }}" placeholder="Nama lengkap pegawai"
@@ -87,7 +117,8 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="mb-3" id="nip" style="{{ old('nd') == 1 ? '' : 'display: none' }}">
+                                <div class="mb-3" id="nip"
+                                    style="{{ old('nd') == 1 ? '' : 'display: none' }}">
                                     <label for="nip" class="form-label">NIP</label>
                                     <input type="text" name="nip" id="nip" value="{{ old('nip') }}"
                                         class="form-control @error('nip') is-invalid @enderror">
