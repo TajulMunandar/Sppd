@@ -196,7 +196,7 @@
                                 results: data.map(function(pegawai) {
                                     return {
                                         id: pegawai.id,
-                                        text: pegawai.nama + ' - ' + pegawai
+                                        text: pegawai.nama_lengkap + ' - ' + pegawai
                                             .nip_baru // Menampilkan nama dan NIP
                                     };
                                 })

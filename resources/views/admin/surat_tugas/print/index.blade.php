@@ -99,12 +99,12 @@
                                             <tr>
                                                 <td class="text-center">{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <p>{{ $pegawai['nama'] }}</p>
+                                                    <p>{{ $pegawai['nama_lengkap'] }}</p>
                                                     <p>NIP. {{ $pegawai['nip_baru'] }}</p>
                                                 </td>
                                                 <td class="text-center">
                                                     <p class="mb-1">
-                                                        {{ $pegawai['latest_pangkat'] ? $pegawai['latest_pangkat']['golongan']['nama'] . ' (' . $pegawai['latest_pangkat']['golongan']['kode'] . ')' : '-' }}
+                                                        {{ $pegawai['pangkats'] ? $pegawai['pangkats'][0]['golongan']['nama'] . ' (' . $pegawai['pangkats'][0]['golongan']['kode'] . ')' : '-' }}
                                                     </p>
                                                     <p class="mb-0">
                                                         {{ $pegawai['latest_jabatan'] ? $pegawai['latest_jabatan']['nama_jabatan'] : '-' }}

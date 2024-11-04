@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PrintSuratTugasRequest;
+use App\Models\ApiToken;
 use Exception;
 use GuzzleHttp\Client;
-use App\Models\Pegawai;
-use App\Models\ApiToken;
 use Illuminate\Support\Carbon;
-use App\Http\Requests\PrintSuratTugasRequest;
 
 class CreateSuratTugasController extends Controller
 {
@@ -27,16 +26,16 @@ class CreateSuratTugasController extends Controller
 
         $token = ApiToken::where('app_name', 'Sijadin')->first();
         try {
-            $client = new Client();
+            $client = new Client;
             $response = $client->request(
                 'POST',
                 'https://simpeg.pupr-acehbaratkab.com/api/data-pegawai/show',
                 [
                     'json' => ['ids' => $pegawaiIds],
                     'headers' => [
-                        'Authorization' => "Bearer " . $token->token,
+                        'Authorization' => 'Bearer '.$token->token,
                         'Accept' => 'application/json',
-                    ]
+                    ],
                 ]
             );
             $pegawais = json_decode($response->getBody()->getContents(), true);
