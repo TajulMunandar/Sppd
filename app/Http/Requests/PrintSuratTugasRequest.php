@@ -22,7 +22,7 @@ class PrintSuratTugasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'pegawai' => ['required'],
+            'pegawai' => 'required|array',
             'perihal' => ['required', 'string', 'max:250'],
             'tujuan' => ['required', 'string', 'max:200'],
             'lama_kegiatan' => ['required', 'numeric'],
@@ -35,6 +35,7 @@ class PrintSuratTugasRequest extends FormRequest
             'pelaksana' => ['nullable', 'required_if:nd,1', 'string', 'max:200'],
             'nip' => ['nullable', 'required_if:nd,1', 'string', 'max:200'],
             'golongan' => ['nullable', 'required_if:nd,1', 'string', 'max:200'],
+            'jabatan' => ['nullable', 'required_if:nd,1', 'string', 'max:200'],
             'nomor_nd' => ['nullable', 'required_if:nd,1', 'string', 'max:200'],
             'tanggal_nd' => ['nullable', 'required_if:nd,1'],
         ];

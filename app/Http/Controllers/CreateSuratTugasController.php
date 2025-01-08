@@ -33,7 +33,7 @@ class CreateSuratTugasController extends Controller
                 [
                     'json' => ['ids' => $pegawaiIds],
                     'headers' => [
-                        'Authorization' => 'Bearer '.$token->token,
+                        'Authorization' => 'Bearer ' . $token->token,
                         'Accept' => 'application/json',
                     ],
                 ]
@@ -49,6 +49,7 @@ class CreateSuratTugasController extends Controller
                 'pelaksana' => $request->pelaksana,
                 'nip' => $request->nip,
                 'golongan' => $request->golongan,
+                'jabatan' => $request->jabatan,
                 'nomor_nd' => $request->nomor_nd,
                 'tgl_berangkat' => $request->tgl_berangkat,
                 'tgl_pulang' => $request->tgl_pulang,

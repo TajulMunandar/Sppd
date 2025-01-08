@@ -44,6 +44,10 @@
                 height: 297mm;
                 background-color: white;
             }
+
+            .mt-2 {
+                margin-top: 1.25rem;
+            }
         }
     </style>
 </head>
@@ -233,13 +237,67 @@
             </tr>
         </table>
     </main>
+    <div class="mt-5 pagebreak"></div>
+    <main class="mt-2">
+        <table class="table table-bordered">
+            <thead class="text-center uppercase">
+                <tr>
+                    <th>No</th>
+                    <th>Tiba Di</th>
+                    <th>Tanggal</th>
+                    <th>Jabatan</th>
+                    <th>Nama Tanda Tangan</th>
+                </tr>
+                <tr class="tfooter">
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="h-75" style="width: 5%"></td>
+                    <td class="h-75" style="width: 25%"></td>
+                    <td class="h-75" style="width: 20%"></td>
+                    <td class="h-75" style="width: 25%"></td>
+                    <td class="h-75" style="width: 25%"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="signature">
+            <table>
+                <tr>
+                    <td>
+                        <div class="identitas">
+                            <p class="mb-1 uppercase"> {{ $data['nd'] ? 'A.n ' : '' }} Kepala Dinas
+                                Pekerjaan Umum dan
+                                <br>
+                                Penataan Ruang Kabupaten Aceh Barat
+                            </p>
+                            @if ($data['nd'])
+                                <p class="">[{{ $data['jabatan'] }}]</p>
+                            @endif
+                            <p class="nama text-underline fw-bold">
+                                {{ $data['nd'] ? $data['pelaksana'] : 'Dr. Ir. KURDI, ST., MT' }}
+                            </p>
+                            <p class="mt-1">{{ $data['nd'] ? $data['golongan'] : 'Pembina TK.I' }}
+                            </p>
+                            <p>NIP. {{ $data['nd'] ? $data['nip'] : '19760612 200504 1 00 1' }}</p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </main>
 
     <script>
         const url = "{{ route('surat-tugas.index') }}";
         window.print();
-        // window.onafterprint = function() {
-        //     window.location.href = url;
-        // };
+        window.onafterprint = function() {
+            window.location.href = url;
+        };
     </script>
 </body>
 

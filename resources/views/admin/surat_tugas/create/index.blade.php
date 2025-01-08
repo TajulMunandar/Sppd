@@ -8,13 +8,12 @@
                             <form action="{{ route('surat-tugas.print') }}" method="POST">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="pegawai"
-                                        class="form-label @error('pegawai[]') is-invalid @enderror">Pegawai</label>
+                                    <label for="pegawai" class="form-label">Pegawai</label>
                                     <select name="pegawai[]" id="pegawai" class="form-select" multiple>
                                         <option value="">--pilih--</option>
                                     </select>
-                                    @error('pegawai[]')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @error('pegawai')
+                                        <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-3">
@@ -146,6 +145,16 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div class="mb-3" id="jabatan"
+                                    style="{{ old('nd') == 1 ? '' : 'display: none' }}">
+                                    <label for="jabatan" class="form-label">Jabatan</label>
+                                    <input type="text" name="jabatan" id="jabatan"
+                                        value="{{ old('jabatan') }}"
+                                        class="form-control @error('jabatan') is-invalid @enderror">
+                                    @error('jabatan')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
                                 <div class="mb-3" id="tanggal"
                                     style="{{ old('nd') == 1 ? '' : 'display: none' }}">
                                     <label for="tanggal_nd" class="form-label">Tanggal ND</label>
@@ -212,12 +221,14 @@
                         $('#pelaksana').show();
                         $('#nip').show();
                         $('#golongan').show();
+                        $('#jabatan').show();
                         $('#nomor').show();
                         $('#tanggal').show();
                     } else {
                         $('#pelaksana').hide();
                         $('#nip').hide();
                         $('#golongan').hide();
+                        $('#jabatan').hide();
                         $('#nomor').hide();
                         $('#tanggal').hide();
                     }
