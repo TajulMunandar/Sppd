@@ -60,7 +60,9 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $surat->nomor_st }}</td>
                                     <td>{{ $surat->nomor_spd }}</td>
-                                    <td>{{ $surat->kegiatan }}</td>
+                                    <td class="text-wrap">
+                                        <div style="width: 350px">{{ $surat->kegiatan }}</div>
+                                    </td>
                                     <td class="text-center">{{ $surat->lama_tugas }}</td>
                                     <td class="text-center">
                                         {{ Carbon\Carbon::parse($surat->tanggal_st)->format('d/m/Y') }}
@@ -182,7 +184,8 @@
                                         <input type="date"
                                             class="form-control @error('tanggal_st') is-invalid @enderror"
                                             name="tanggal_st" id="tanggal"
-                                            value="{{ old('tanggal_st', $surat->tanggal_st) }}" required>
+                                            value="{{ old('tanggal_st', $surat->tanggal_st->format('Y-m-d')) }}"
+                                            required>
                                         @error('tanggal_st')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -195,7 +198,7 @@
                                         <input type="date"
                                             class="form-control @error('tanggal_berangkat') is-invalid @enderror"
                                             name="tanggal_berangkat" id="tanggal_berangkat"
-                                            value="{{ old('tanggal_berangkat', $surat->tanggal_berangkat) }}"
+                                            value="{{ old('tanggal_berangkat', $surat->tanggal_berangkat->format('Y-m-d')) }}"
                                             required>
                                         @error('tanggal_berangkat')
                                             <div class="invalid-feedback">
@@ -209,7 +212,8 @@
                                         <input type="date"
                                             class="form-control @error('tanggal_kembali') is-invalid @enderror"
                                             name="tanggal_kembali" id="tanggal_kembali"
-                                            value="{{ old('tanggal_kembali', $surat->tanggal_kembali) }}" required>
+                                            value="{{ old('tanggal_kembali', $surat->tanggal_kembali->format('Y-m-d')) }}"
+                                            required>
                                         @error('tanggal_berangkat')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -317,10 +321,10 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="tanggal" class="form-label">Tanggal ST</label>
-                <input type="date" class="form-control @error('tanggal') is-invalid @enderror" name="tanggal"
-                    id="tanggal" value="{{ old('tanggal') }}" required>
-                @error('tanggal')
+                <label for="tanggal_st" class="form-label">Tanggal ST</label>
+                <input type="date" class="form-control @error('tanggal_st') is-invalid @enderror"
+                    name="tanggal_st" id="tanggal_st" value="{{ old('tanggal_st') }}" required>
+                @error('tanggal_st')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>

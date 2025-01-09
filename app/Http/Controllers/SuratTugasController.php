@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\QueryException;
 use App\Http\Requests\StoreSuratTugasRequest;
+use App\Http\Requests\SuratTugasRequest;
 use App\Http\Requests\UpdateSuratTugasRequest;
 use Illuminate\Validation\ValidationException;
 
@@ -37,6 +38,7 @@ class SuratTugasController extends Controller
     public function store(StoreSuratTugasRequest $request)
     {
         $validatedData = $request->validated();
+
         DB::beginTransaction();
         try {
             SuratTugas::create($validatedData);
@@ -133,20 +135,10 @@ class SuratTugasController extends Controller
         return view('admin.sppd.surat_tugas.show', compact('surats', 'title', 'subtitle', 'sppd', 'pegawais'));
     }
 
-    public function storeDetail(Request $request)
+    public function storeDetail(SuratTugasRequest $request)
     {
-        $validatedData = $request->validate([
-            'sppd_id' => 'required',
-            'nomor_st' => 'required',
-            'nomor_spd' => 'required',
-            'kegiatan' => 'required',
-            'dari' => 'required',
-            'tujuan' => 'required',
-            'lama_tugas' => 'required',
-            'tanggal' => 'required',
-            'tanggal_berangkat' => 'required',
-            'tanggal_kembali' => 'required',
-        ]);
+        $validatedData = $request->validated();
+        $validatedData['tanggal_st'] = $validatedData['tanggal'];
         DB::beginTransaction();
         try {
             SuratTugas::create($validatedData);

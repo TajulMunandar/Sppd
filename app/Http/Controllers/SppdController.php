@@ -94,16 +94,10 @@ class SppdController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Sppd $sppd)
+    public function update(StoreSppdRequest $request, Sppd $sppd)
     {
         try {
-            $rules = [
-                'jenis_tugas_id' => 'required',
-                'nomor_sp2d' => 'required',
-                'kegiatan' => 'required',
-                'total_biaya' => 'required',
-            ];
-            $validatedData = $this->validate($request, $rules);
+            $validatedData = $request->validated();
 
             // Update data SPPD
             $sppd->update($validatedData);
@@ -111,7 +105,8 @@ class SppdController extends Controller
             // Update pegawai terkait
             $sppd->pegawais()->sync($request->pegawai);
 
-            return redirect()->route('sppd.index')->with('success', "Data SPPD $sppd->nomor_sp2d berhasil diperbarui!");
+            return redirect()->route('sppd.index')
+                ->with('success', "Data SPPD $sppd->nomor_sp2d berhasil diperbarui!");
         } catch (ValidationException $exception) {
             return redirect()->route('sppd.index')->with('failed', 'Data gagal diperbarui! ' . $exception->getMessage());
         }

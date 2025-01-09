@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Crypt;
+use App\Models\Sppd;
+use App\Models\Akomodasi;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreAkomodasiRequest;
 use App\Http\Requests\UpdateAkomodasiRequest;
-use App\Models\Akomodasi;
-use App\Models\Sppd;
-use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class AkomodasiController extends Controller
@@ -16,12 +18,21 @@ class AkomodasiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Data Akomodasi';
+        $sppdId = $request->id;
+        $jenis = $request->jenis;
+        $tipe = Crypt::decrypt($jenis);
         $akomodasi = Akomodasi::where('sppd_id', request('id'))->first();
 
-        return view('admin.sppd.akomodasi.create')->with(compact('title', 'akomodasi'));
+        return view('admin.sppd.akomodasi.create', [
+            'title' => $title,
+            'sppdId' => $sppdId,
+            'akomodasi' => $akomodasi,
+            'tipe' => $tipe,
+            'jenis' => $jenis
+        ]);
     }
 
     /**

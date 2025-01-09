@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Crypt;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -45,5 +46,12 @@ class StoreSuratTugasRequest extends FormRequest
             'lama_tugas' => 'Lama tugas',
             'tanggal_berangkat' => 'Tanggal berangkat',
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        return $this->merge([
+            'sppd_id' => Crypt::decrypt($this->input('sppd_id')),
+        ]);
     }
 }

@@ -31,6 +31,10 @@
                 height: 297mm;
                 background-color: white;
             }
+
+            tbody.noborder td:not(:last-child) {
+                border-bottom: none;
+            }
         }
 
         @media print {
@@ -98,7 +102,7 @@
                                             <th>3</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="noborder">
                                         @foreach ($pegawais as $pegawai)
                                             <tr>
                                                 <td class="text-center">{{ $loop->iteration }}</td>

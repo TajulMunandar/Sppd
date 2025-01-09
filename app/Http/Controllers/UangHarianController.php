@@ -21,11 +21,13 @@ class UangHarianController extends Controller
     public function index(Request $request)
     {
         $title = 'Data Uang Harian';
-        $sppdId = $request->id;
-        $jenis = $request->jenis;
-        $tipe = Crypt::decrypt($request->jenis);
 
-        return view('admin.sppd.uang_harian.create', compact('title', 'sppdId', 'jenis', 'tipe'));
+        $sppdId = $request->id;
+        $sppd = Sppd::find($sppdId);
+        $tipe = $sppd->jenis_tugas_id;
+        $jenis = Crypt::encrypt($tipe);
+
+        return view('admin.sppd.uang_harian.create', compact('title', 'sppdId', 'tipe', 'jenis'));
     }
 
     /**
@@ -87,7 +89,7 @@ class UangHarianController extends Controller
 
             return redirect()->back()->with('success', "Data Uang Harian $uang->harian berhasil diperbarui!");
         } catch (ValidationException $exception) {
-            return redirect()->back()->with('failed', 'Data gagal diperbarui! '.$exception->getMessage());
+            return redirect()->back()->with('failed', 'Data gagal diperbarui! ' . $exception->getMessage());
         }
     }
 
@@ -112,7 +114,7 @@ class UangHarianController extends Controller
     {
         $sppd = Sppd::find($sppdId);
         $title = 'Data Sppd Detail - Uang Harian ';
-        if (! $sppd) {
+        if (!$sppd) {
             abort(404); // Or handle the case when the Sppd is not found
         }
 
