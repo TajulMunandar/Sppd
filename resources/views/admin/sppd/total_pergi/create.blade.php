@@ -6,7 +6,19 @@
                     {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-            @elseif (session()->has('failed'))
+            @endif
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Info!</strong>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            @if (session()->has('failed'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     {{ session('failed') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -54,7 +66,8 @@
                     {{-- Form Berita --}}
                     <form action="{{ route('pergi.store') }}" method="post">
                         @csrf
-                        <input type="hidden" name="sppd_id" value="{{ request('id') }}">
+                        <input type="hidden" name="sppd_id" value="{{ $sppdId }}">
+                        <input type="hidden" name="jenis" value="{{ $jenis }}">
                         <div class="mb-3">
                             <label for="asal" class="form-label">Asal</label>
                             <input type="text" class="form-control @error('asal') is-invalid @enderror"
@@ -115,7 +128,8 @@
                         <div class="mb-3">
                             <label for="no_eticket" class="form-label">No Eticket</label>
                             <input type="text" class="form-control @error('no_eticket') is-invalid @enderror"
-                                name="no_eticket" id="no_eticket" value="{{ old('no_eticket', $tiket?->no_eticket) }}">
+                                name="no_eticket" id="no_eticket"
+                                value="{{ old('no_eticket', $tiket?->no_eticket) }}">
                             @error('no_eticket')
                                 <div class="invalid-feedback">
                                     {{ $message }}

@@ -42,7 +42,11 @@ class TiketPergiController extends Controller
                 $validatedData
             );
 
-            return to_route('pulang.index', ['id' => $request->sppd_id])->with('success', 'Tiket Pergi baru berhasil ditambahkan!');
+            return to_route('pulang.index', [
+                'id' => $request->sppd_id,
+                'jenis' => $request->jenis
+            ])
+                ->with('success', 'Tiket Pergi baru berhasil ditambahkan!');
         } catch (Exception $e) {
             return back()->with('failed', $e->getMessage());
         }

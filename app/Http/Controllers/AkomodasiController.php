@@ -50,7 +50,10 @@ class AkomodasiController extends Controller
             $validatedData
         );
 
-        return redirect()->route('pergi.index', ['id' => $request->sppd_id])
+        return redirect()->route('pergi.index', [
+            'id' => $request->sppd_id,
+            'jenis' => $request->jenis
+        ])
             ->with('success', 'Akomodasi baru berhasil ditambahkan!');
     }
 

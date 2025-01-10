@@ -11,6 +11,16 @@
                     {{ session('failed') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
+            @else
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Info!</strong>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             @endif
         </div>
     </div>
@@ -55,7 +65,8 @@
                     {{-- Form Berita --}}
                     <form action="{{ route('uang.store') }}" method="post">
                         @csrf
-                        <input type="hidden" name="sppd_id" value="{{ request('id') }}">
+                        <input type="hidden" name="sppd_id" value="{{ $sppdId }}">
+                        <input type="hidden" name="jenis" value="{{ $jenis }}">
                         <div class="mb-3">
                             <label for="harian" class="form-label">Harian</label>
                             <input type="text" class="form-control @error('harian') is-invalid @enderror"
@@ -69,7 +80,7 @@
 
                         <div class="mb-3">
                             <label for="konsumsi" class="form-label">Konsumsi</label>
-                            <input type="number" class="form-control @error('konsumsi') is-invalid @enderror"
+                            <input type="text" class="form-control @error('konsumsi') is-invalid @enderror"
                                 name="konsumsi" id="konsumsi" value="{{ old('konsumsi') }}" autofocus required>
                             @error('konsumsi')
                                 <div class="invalid-feedback">
@@ -92,7 +103,7 @@
 
                         <div class="mb-3">
                             <label for="representasi" class="form-label">Representasi</label>
-                            <input type="number" class="form-control @error('representasi') is-invalid @enderror"
+                            <input type="text" class="form-control @error('representasi') is-invalid @enderror"
                                 name="representasi" id="representasi" value="{{ old('representasi') }}" autofocus
                                 required>
                             @error('representasi')
@@ -115,7 +126,7 @@
     @push('script')
         <script src="{{ asset('libs/mask-money/jquery.maskMoney.min.js') }}"></script>
         <script>
-            $('#harian, #transportasi').maskMoney({
+            $('#harian, #konsumsi, #transportasi, #representasi').maskMoney({
                 thousands: '.',
                 decimal: ',',
                 allowZero: true,

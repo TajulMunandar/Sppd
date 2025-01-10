@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUangHarianRequest;
-use App\Http\Requests\UangHarianRequest;
-use App\Http\Requests\UpdateUangHarianRequest;
 use App\Models\Sppd;
 use App\Models\SuratTugas;
 use App\Models\UangHarian;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Database\QueryException;
+use App\Http\Requests\UangHarianRequest;
+use App\Http\Requests\StoreUangHarianRequest;
+use App\Http\Requests\UpdateUangHarianRequest;
 use Illuminate\Validation\ValidationException;
 
 class UangHarianController extends Controller
@@ -37,19 +38,26 @@ class UangHarianController extends Controller
     {
         $st = SuratTugas::where('sppd_id', $request->sppd_id)->first();
 
+        DB::beginTransaction();
         try {
             $validatedData = $request->validated();
             $validatedData['total_harian'] = $request->harian * $st->lama_tugas;
             $validatedData['total_konsumsi'] = $request->konsumsi * $st->lama_tugas;
             $validatedData['total_transportasi'] = $request->transportasi * $st->lama_tugas;
             $validatedData['total_representasi'] = $request->representasi;
+            DB::commit();
         } catch (ValidationException $exception) {
+            DB::rollBack();
             return back()->with('failed', $exception->getMessage());
         }
 
         UangHarian::create($validatedData);
 
-        return redirect()->route('akomodasi.index', ['id' => $request->sppd_id])->with('success', 'Uang Harian baru berhasil ditambahkan!');
+        return redirect()->route('akomodasi.index', [
+            'id' => $request->sppd_id,
+            'jenis' => $request->jenis
+        ])
+            ->with('success', 'Uang Harian baru berhasil ditambahkan!');
     }
 
     /**

@@ -110,8 +110,8 @@
 
                         <div class="mb-3">
                             <label for="tujuan" class="form-label">Tujuan</label>
-                            <textarea type="text" class="form-control @error('tujuan') is-invalid @enderror" name="tujuan" id="tujuan"
-                                value="{{ old('tujuan') }}" required></textarea>
+                            <input type="text" class="form-control @error('tujuan') is-invalid @enderror"
+                                name="tujuan" id="tujuan" value="{{ old('tujuan') }}" required>
                             @error('tujuan')
                                 <div class="invalid-feedback">
                                     {{ $message }}

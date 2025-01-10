@@ -6,9 +6,21 @@
                     {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-            @elseif (session()->has('failed'))
+            @endif
+            @if (session()->has('failed'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     {{ session('failed') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Info!</strong>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
@@ -115,7 +127,8 @@
                         <div class="mb-3">
                             <label for="no_eticket" class="form-label">No Eticket</label>
                             <input type="text" class="form-control @error('no_eticket') is-invalid @enderror"
-                                name="no_eticket" id="no_eticket" value="{{ old('no_eticket', $tiket?->no_eticket) }}">
+                                name="no_eticket" id="no_eticket"
+                                value="{{ old('no_eticket', $tiket?->no_eticket) }}">
                             @error('no_eticket')
                                 <div class="invalid-feedback">
                                     {{ $message }}

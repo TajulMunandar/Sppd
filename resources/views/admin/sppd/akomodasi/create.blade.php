@@ -11,6 +11,16 @@
                     {{ session('failed') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
+            @else
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Info!</strong>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             @endif
         </div>
     </div>
@@ -55,7 +65,8 @@
                     {{-- Form Berita --}}
                     <form action="{{ route('akomodasi.store') }}" method="post">
                         @csrf
-                        <input type="hidden" name="sppd_id" value="{{ request('id') }}">
+                        <input type="hidden" name="sppd_id" value="{{ $sppdId }}">
+                        <input type="hidden" name="jenis" value="{{ $jenis }}">
                         <div class="mb-3">
                             <label for="name_hotel" class="form-label">Nama Hotel</label>
                             <input type="text" class="form-control @error('name_hotel') is-invalid @enderror"

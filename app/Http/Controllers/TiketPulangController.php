@@ -44,7 +44,7 @@ class TiketPulangController extends Controller
             );
             DB::commit();
 
-            return back()->with('success', 'Data tiket berhasil ditambahkan!');
+            return to_route('sppd.index')->with('success', 'Data rincian SPPD berhasil ditambahkan!');
         } catch (Exception $e) {
             DB::rollBack();
 

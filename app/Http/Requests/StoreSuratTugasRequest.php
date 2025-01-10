@@ -24,7 +24,7 @@ class StoreSuratTugasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sppd_id' => 'required',
+            'sppd_id' => 'required|unique:surat_tugas,sppd_id',
             'nomor_spd' => 'required',
             'nomor_st' => 'required',
             'kegiatan' => 'required|max:250',

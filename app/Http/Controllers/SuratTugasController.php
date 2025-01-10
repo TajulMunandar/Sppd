@@ -11,8 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\QueryException;
-use App\Http\Requests\StoreSuratTugasRequest;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\SuratTugasRequest;
+use App\Http\Requests\StoreSuratTugasRequest;
 use App\Http\Requests\UpdateSuratTugasRequest;
 use Illuminate\Validation\ValidationException;
 
@@ -109,7 +110,8 @@ class SuratTugasController extends Controller
     public function destroy(SuratTugas $surat)
     {
         try {
-            SuratTugas::destroy($surat->id);
+            $surat->delete();
+            DB::statement('ALTER TABLE surat_tugas AUTO_INCREMENT=1');
         } catch (QueryException $e) {
             if ($e->getCode() == 23000) {
                 //SQLSTATE[23000]: Integrity constraint violation

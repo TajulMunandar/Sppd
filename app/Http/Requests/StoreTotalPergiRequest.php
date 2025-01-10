@@ -23,6 +23,7 @@ class StoreTotalPergiRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'sppd_id' => 'required|unique:total_pergi,sppd_id',
             'asal' => 'required',
             'tujuan' => 'required',
             'tgl_penerbangan' => 'required',

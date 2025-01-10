@@ -23,6 +23,7 @@ class StoreAkomodasiRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'sppd_id' => 'required|unique:akomodasi,sppd_id',
             'name_hotel' => 'nullable|string|max:250',
             'check_in' => 'nullable',
             'check_out' => 'nullable',

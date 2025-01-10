@@ -23,7 +23,7 @@ class StoreUangHarianRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sppd_id' => 'required',
+            'sppd_id' => 'required|unique:uang_harian,sppd_id',
             'harian' => 'required',
             'konsumsi' => 'required',
             'transportasi' => 'required',
