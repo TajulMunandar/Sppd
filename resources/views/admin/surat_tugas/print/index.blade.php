@@ -35,6 +35,22 @@
             tbody.noborder td:not(:last-child) {
                 border-bottom: none;
             }
+
+            .spacing {
+                margin-left: 2rem;
+            }
+
+            .table-bordered thead tr.tfooter th {
+                padding: 0;
+            }
+
+            .tfooter.background {
+                background-color: #eaeaea;
+            }
+
+            .cell-content {
+                min-height: 150px;
+            }
         }
 
         @media print {
@@ -51,6 +67,18 @@
 
             .mt-2 {
                 margin-top: 1.25rem;
+            }
+
+            .spacing {
+                margin-left: 2rem;
+            }
+
+            .tfooter.background {
+                background-color: #eaeaea;
+            }
+
+            .cell-content {
+                min-height: 150px;
             }
         }
     </style>
@@ -78,8 +106,8 @@
             <tr class="content">
                 <td colspan="2">
                     <div class="title">
-                        <h6 class="uppercase">Surat Tugas</h6>
-                        <p>Nomor : 090/<span
+                        <h5 class="uppercase text-underline">Surat Tugas</h5>
+                        <p>NOMOR : 090/<span
                                 class="nomor__agenda"></span>/ST/{{ romawi($data['bulan']) }}/{{ $data['tahun'] }}
                         </p>
                     </div>
@@ -92,11 +120,11 @@
                                 <table class="table table-bordered">
                                     <thead class="text-center">
                                         <tr>
-                                            <th></th>
+                                            <th>No</th>
                                             <th>Nama/NIP</th>
                                             <th>Pangkat/Jabatan</th>
                                         </tr>
-                                        <tr class="tfooter">
+                                        <tr class="tfooter background">
                                             <th>1</th>
                                             <th>2</th>
                                             <th>3</th>
@@ -107,7 +135,7 @@
                                             <tr>
                                                 <td class="text-center">{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <p>{{ $pegawai['nama_lengkap'] }}</p>
+                                                    <p class="nama__pegawai">{{ $pegawai['nama_lengkap'] }}</p>
                                                     <p>NIP. {{ $pegawai['nip_baru'] }}</p>
                                                 </td>
                                                 <td class="text-center">
@@ -191,51 +219,6 @@
                                 </tr>
                             </table>
                         </div>
-
-                        <div class="container">
-                            <div class="text-left kotak">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>1.</td>
-                                            <td style="width: 110px">Tiba di</td>
-                                            <td>:</td>
-                                            <td class="hidden">{{ $data['tujuan'] }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>Pada tanggal</td>
-                                            <td>:</td>
-                                            <td class="hidden"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="text-left kotak">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>2.</td>
-                                            <td style="width: 110px">Berangkat dari</td>
-                                            <td>:</td>
-                                            <td class="hidden">{{ $data['tujuan'] }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>Ke</td>
-                                            <td>:</td>
-                                            <td class="hidden">Dinas PUPR Aceh Barat</td>
-                                        </tr>
-                                        <tr style="height: 150px">
-                                            <td></td>
-                                            <td>Pada tanggal</td>
-                                            <td>:</td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
                     </div>
                 </td>
             </tr>
@@ -243,52 +226,68 @@
     </main>
     <div class="mt-5 pagebreak"></div>
     <main class="mt-2">
-        <table class="table table-bordered">
-            <thead class="text-center uppercase">
+        <table class="styled-table">
+            @foreach (array_chunk(range(1, 10), 2) as $pair)
                 <tr>
-                    <th>No</th>
-                    <th>Tiba Di</th>
-                    <th>Tanggal</th>
-                    <th>Jabatan</th>
-                    <th>Nama Tanda Tangan</th>
+                    @foreach ($pair as $item)
+                        <td>
+                            <div class="cell-content">
+                                <div class="number-row">
+                                    <span class="number">{{ $item }}.</span>
+                                    @if ($item % 2 == 0)
+                                        <!-- Cek apakah nomor genap -->
+                                        <span class="label">Berangkat dari</span>
+                                        <span class="separator">:</span>
+                                    @else
+                                        <span class="label">Tiba di</span>
+                                        <span class="separator">:</span>
+                                    @endif
+                                </div>
+                                @if ($item % 2 == 0)
+                                    <!-- Cek jika genap -->
+                                    <div class="row">
+                                        <span class="label">Ke</span>
+                                        <span class="separator">:</span>
+                                    </div>
+                                    <div class="row">
+                                        <span class="label">Tanggal</span>
+                                        <span class="separator">:</span>
+                                    </div>
+                                @else
+                                    <div class="row">
+                                        <span class="label">Pada tanggal</span>
+                                        <span class="separator">:</span>
+                                    </div>
+                                @endif
+                            </div>
+                        </td>
+                    @endforeach
+                    {{-- Tambahkan kolom kosong jika pasangan tidak lengkap --}}
+                    @if (count($pair) < 2)
+                        <td></td>
+                    @endif
                 </tr>
-                <tr class="tfooter">
-                    <th>1</th>
-                    <th>2</th>
-                    <th>3</th>
-                    <th>4</th>
-                    <th>5</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="h-75" style="width: 5%"></td>
-                    <td class="h-75" style="width: 25%"></td>
-                    <td class="h-75" style="width: 20%"></td>
-                    <td class="h-75" style="width: 25%"></td>
-                    <td class="h-75" style="width: 25%"></td>
-                </tr>
-            </tbody>
+            @endforeach
         </table>
+
         <div class="signature">
             <table>
                 <tr>
                     <td>
                         <div class="identitas">
-                            <p class="mb-1 uppercase"> {{ $data['nd'] ? 'A.n ' : '' }} Kepala Dinas
-                                Pekerjaan Umum dan
-                                <br>
-                                Penataan Ruang Kabupaten Aceh Barat
+                            <p class="mb-1"> An. <span class="uppercase">Kepala Dinas
+                                    Pekerjaan Umum dan
+                                    <br>
+                                    Penataan Ruang Kabupaten Aceh Barat</span>
                             </p>
-                            @if ($data['nd'])
-                                <p class="">[{{ $data['jabatan'] }}]</p>
-                            @endif
-                            <p class="nama text-underline fw-bold">
-                                {{ $data['nd'] ? $data['pelaksana'] : 'Dr. Ir. KURDI, ST., MT' }}
+                            <p class="">Plt. <span class="uppercase">Kasubbag Umum dan Kepegawaian</span></p>
+                            <p class="uppercase nama text-underline fw-bold">
+                                Suhendri Arba, ST., MT
                             </p>
-                            <p class="mt-1">{{ $data['nd'] ? $data['golongan'] : 'Pembina TK.I' }}
+                            <p class="mt-1">
+                                Pembina Muda Tk. I
                             </p>
-                            <p>NIP. {{ $data['nd'] ? $data['nip'] : '19760612 200504 1 00 1' }}</p>
+                            <p>NIP. 19850331 201003 1 001</p>
                         </div>
                     </td>
                 </tr>
