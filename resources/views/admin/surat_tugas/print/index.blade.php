@@ -204,10 +204,10 @@
                                                 {{ Carbon::parse($data['tgl_surat'])->translatedFormat('F Y') }}</p>
                                             <p class="mb-1 uppercase">Kepala Dinas Pekerjaan Umum dan <br>
                                                 Penataan Ruang Kabupaten Aceh Barat</p>
-                                            <p class="nama text-underline">
+                                            <p class="nama__pegawai fw-bold" style="margin-top: 60px">
                                                 {{ $data['nd'] ? $data['pelaksana'] : 'Dr. Ir. KURDI, ST., MT' }}
                                             </p>
-                                            <p class="mt-1">{{ $data['nd'] ? $data['golongan'] : 'Pembina TK.I' }}
+                                            <p class="mt-1">{{ $data['nd'] ? $data['golongan'] : 'Pembina Tk. I' }}
                                             </p>
                                             <p>NIP. {{ $data['nd'] ? $data['nip'] : '19760612 200504 1 00 1' }}</p>
                                             @if ($data['nd'])
@@ -224,83 +224,85 @@
             </tr>
         </table>
     </main>
-    <div class="mt-5 pagebreak"></div>
-    <main class="mt-2">
-        <table class="styled-table">
-            @foreach (array_chunk(range(1, 10), 2) as $pair)
-                <tr>
-                    @foreach ($pair as $item)
-                        <td>
-                            <div class="cell-content">
-                                <div class="number-row">
-                                    <span class="number">{{ $item }}.</span>
+    @if ($data['jenis'] == 1)
+        <div class="mt-5 pagebreak"></div>
+        <main class="mt-2">
+            <table class="styled-table">
+                @foreach (array_chunk(range(1, 10), 2) as $pair)
+                    <tr>
+                        @foreach ($pair as $item)
+                            <td>
+                                <div class="cell-content">
+                                    <div class="number-row">
+                                        <span class="number">{{ $item }}.</span>
+                                        @if ($item % 2 == 0)
+                                            <!-- Cek apakah nomor genap -->
+                                            <span class="label">Berangkat dari</span>
+                                            <span class="separator">:</span>
+                                        @else
+                                            <span class="label">Tiba di</span>
+                                            <span class="separator">:</span>
+                                        @endif
+                                    </div>
                                     @if ($item % 2 == 0)
-                                        <!-- Cek apakah nomor genap -->
-                                        <span class="label">Berangkat dari</span>
-                                        <span class="separator">:</span>
+                                        <!-- Cek jika genap -->
+                                        <div class="row">
+                                            <span class="label">Ke</span>
+                                            <span class="separator">:</span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="label">Tanggal</span>
+                                            <span class="separator">:</span>
+                                        </div>
                                     @else
-                                        <span class="label">Tiba di</span>
-                                        <span class="separator">:</span>
+                                        <div class="row">
+                                            <span class="label">Pada tanggal</span>
+                                            <span class="separator">:</span>
+                                        </div>
                                     @endif
                                 </div>
-                                @if ($item % 2 == 0)
-                                    <!-- Cek jika genap -->
-                                    <div class="row">
-                                        <span class="label">Ke</span>
-                                        <span class="separator">:</span>
-                                    </div>
-                                    <div class="row">
-                                        <span class="label">Tanggal</span>
-                                        <span class="separator">:</span>
-                                    </div>
-                                @else
-                                    <div class="row">
-                                        <span class="label">Pada tanggal</span>
-                                        <span class="separator">:</span>
-                                    </div>
-                                @endif
+                            </td>
+                        @endforeach
+                        {{-- Tambahkan kolom kosong jika pasangan tidak lengkap --}}
+                        @if (count($pair) < 2)
+                            <td></td>
+                        @endif
+                    </tr>
+                @endforeach
+            </table>
+
+            <div class="signature">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="identitas">
+                                <p class="mb-1"> An. <span class="uppercase">Kepala Dinas
+                                        Pekerjaan Umum dan
+                                        <br>
+                                        Penataan Ruang Kabupaten Aceh Barat</span>
+                                </p>
+                                <p class="">Plt. <span class="uppercase">Kasubbag Umum dan Kepegawaian</span></p>
+                                <p class="uppercase nama text-underline fw-bold">
+                                    Suhendri Arba, ST., MT
+                                </p>
+                                <p class="mt-1">
+                                    Penata Muda Tk. I
+                                </p>
+                                <p>NIP. 19850331 201003 1 001</p>
                             </div>
                         </td>
-                    @endforeach
-                    {{-- Tambahkan kolom kosong jika pasangan tidak lengkap --}}
-                    @if (count($pair) < 2)
-                        <td></td>
-                    @endif
-                </tr>
-            @endforeach
-        </table>
-
-        <div class="signature">
-            <table>
-                <tr>
-                    <td>
-                        <div class="identitas">
-                            <p class="mb-1"> An. <span class="uppercase">Kepala Dinas
-                                    Pekerjaan Umum dan
-                                    <br>
-                                    Penataan Ruang Kabupaten Aceh Barat</span>
-                            </p>
-                            <p class="">Plt. <span class="uppercase">Kasubbag Umum dan Kepegawaian</span></p>
-                            <p class="uppercase nama text-underline fw-bold">
-                                Suhendri Arba, ST., MT
-                            </p>
-                            <p class="mt-1">
-                                Pembina Muda Tk. I
-                            </p>
-                            <p>NIP. 19850331 201003 1 001</p>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </main>
+                    </tr>
+                </table>
+            </div>
+        </main>
+    @endif
 
     <script>
         const url = "{{ route('surat-tugas.index') }}";
-        window.print();
-        window.onafterprint = function() {
-            window.location.href = url;
-        };
+        // window.print();
+        // window.onafterprint = function() {
+        //     window.location.href = url;
+        // };
     </script>
 </body>
 

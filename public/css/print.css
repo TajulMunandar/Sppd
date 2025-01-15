@@ -209,7 +209,7 @@ td.pt-0 {
 
 p.nama {
     margin-top: 60px;
-    text-underline-offset: 4px;
+    text-underline-offset: 3px;
 }
 
 .container:first-child {
@@ -254,7 +254,7 @@ td.h-75 {
     height: 1px;
     width: 100%;
     background-color: black;
-    z-index: 2;
+    z-index: 10;
 }
 
 .styled-table {

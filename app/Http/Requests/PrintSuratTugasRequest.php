@@ -22,6 +22,7 @@ class PrintSuratTugasRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'jenis' => 'required',
             'pegawai' => 'required|array',
             'perihal' => ['required', 'string', 'max:250'],
             'tujuan' => ['required', 'string', 'max:200'],

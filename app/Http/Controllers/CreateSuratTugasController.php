@@ -40,6 +40,7 @@ class CreateSuratTugasController extends Controller
             );
             $pegawais = json_decode($response->getBody()->getContents(), true);
             $data = [
+                'jenis' => $request->jenis,
                 'tujuan' => $request->tujuan,
                 'perihal' => $request->perihal,
                 'lama_kegiatan' => $request->lama_kegiatan,
@@ -56,8 +57,6 @@ class CreateSuratTugasController extends Controller
                 'tgl_surat' => $request->tgl_surat,
                 'tanggal_nd' => Carbon::parse($request->tanggal_nd)->translatedFormat('d F Y'),
             ];
-
-            // dd($pegawais);
 
             return view('admin.surat_tugas.print.index', compact('title', 'data', 'pegawais'));
         } catch (Exception $e) {
