@@ -299,10 +299,10 @@
 
     <script>
         const url = "{{ route('surat-tugas.index') }}";
-        // window.print();
-        // window.onafterprint = function() {
-        //     window.location.href = url;
-        // };
+        window.print();
+        window.onafterprint = function() {
+            window.location.href = url;
+        };
     </script>
 </body>
 
