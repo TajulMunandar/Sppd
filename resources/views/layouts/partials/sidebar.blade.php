@@ -22,10 +22,16 @@
                     <div data-i18n="Analytics">SPPD</div>
                 </a>
             </li>
-            <li class="menu-item {{ routeActive('surat-tugas.*') }}">
+            <li class="menu-item {{ routeActive('surat-tugas.index') }}">
                 <a href="{{ route('surat-tugas.index') }}" class="menu-link">
                     <i class="fa-duotone fa-file-contract me-3"></i>
                     <div data-i18n="Analytics">Surat Tugas</div>
+                </a>
+            </li>
+            <li class="menu-item {{ routeActive('surat-tugas.riwayat') }}">
+                <a href="{{ route('surat-tugas.riwayat') }}" class="menu-link">
+                    <i class="fa-duotone fa-file-contract me-3"></i>
+                    <div data-i18n="Analytics">Riwayat ST</div>
                 </a>
             </li>
             <li class="menu-item {{ Request::is('dashboard/pegawai*') ? 'active' : '' }}">

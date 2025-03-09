@@ -46,11 +46,11 @@ class SuratTugasController extends Controller
             DB::commit();
         } catch (ValidationException $exception) {
             DB::rollBack();
-
             return back()->with('failed', $exception->getMessage());
         }
 
-        return redirect()->route('uang.index', ['id' => $request->sppd_id])->with('success', 'Surat tugas baru berhasil ditambahkan!');
+        return to_route('uang.index', ['id' => $request->sppd_id])
+            ->with('success', 'Surat tugas baru berhasil ditambahkan!');
     }
 
     /**

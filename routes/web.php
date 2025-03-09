@@ -8,6 +8,7 @@ use App\Http\Controllers\DokumenSuratTugasController;
 use App\Http\Controllers\JenisTugasController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RiwayatSuratTugasController;
 use App\Http\Controllers\SppdController;
 use App\Http\Controllers\SuratTugasController;
 use App\Http\Controllers\TiketPergiController;
@@ -71,6 +72,9 @@ Route::middleware('auth')->group(function () {
             Route::post('/print', 'print')->name('print');
         });
 
+    // Riwayat Surat Tugas
+    Route::get('/surat-tugas/riwayat', RiwayatSuratTugasController::class)->name('surat-tugas.riwayat');
+
     // uang
     Route::resource('/uang', UangHarianController::class)->parameters([
         'sppd' => 'id',
@@ -109,4 +113,4 @@ Route::middleware('auth')->group(function () {
         });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
