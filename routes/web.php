@@ -64,16 +64,22 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', 'store')->name('store');
         });
 
-    // Buat Surat Tugas
-    Route::controller(CreateSuratTugasController::class)
-        ->prefix('surat-tugas')->name('surat-tugas.')
-        ->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::post('/print', 'print')->name('print');
-        });
+    Route::prefix('surat-tugas')->name('surat-tugas.')->group(function () {
 
-    // Riwayat Surat Tugas
-    Route::get('/surat-tugas/riwayat', RiwayatSuratTugasController::class)->name('surat-tugas.riwayat');
+        // Buat Surat Tugas
+        Route::controller(CreateSuratTugasController::class)
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::post('/print', 'print')->name('print');
+            });
+
+        // Riwayat Surat Tugas
+        Route::controller(RiwayatSuratTugasController::class)->prefix('riwayat')->name('riwayat.')
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/destroy/{id}', 'destroy')->name('destroy');
+            });
+    });
 
     // uang
     Route::resource('/uang', UangHarianController::class)->parameters([

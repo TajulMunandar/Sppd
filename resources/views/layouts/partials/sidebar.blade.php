@@ -28,8 +28,8 @@
                     <div data-i18n="Analytics">Surat Tugas</div>
                 </a>
             </li>
-            <li class="menu-item {{ routeActive('surat-tugas.riwayat') }}">
-                <a href="{{ route('surat-tugas.riwayat') }}" class="menu-link">
+            <li class="menu-item {{ routeActive('surat-tugas.riwayat.*') }}">
+                <a href="{{ route('surat-tugas.riwayat.index') }}" class="menu-link">
                     <i class="fa-duotone fa-file-contract me-3"></i>
                     <div data-i18n="Analytics">Riwayat ST</div>
                 </a>
