@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RiwayatSuratTugas;
+
 
 class RiwayatSuratTugasController extends Controller
 {
@@ -11,6 +13,7 @@ class RiwayatSuratTugasController extends Controller
     public function __invoke()
     {
         $title = 'Riwayat Surat Tugas';
-        return view('admin.surat_tugas.riwayat.index', compact('title'));
+        $datas = RiwayatSuratTugas::latest()->get();
+        return view('admin.surat_tugas.riwayat.index', compact('title', 'datas'));
     }
 }

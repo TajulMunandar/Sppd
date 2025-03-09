@@ -12,11 +12,15 @@ return new class extends Migration {
     {
         Schema::create('riwayat_surat_tugas', function (Blueprint $table) {
             $table->id();
+            $table->integer('jenis');
             $table->string('pegawai');
             $table->string('perihal');
             $table->string('tujuan');
             $table->date('tanggal_berangkat');
             $table->date('tanggal_kembali');
+            $table->integer('bulan');
+            $table->year('tahun');
+            $table->date('tanggal_surat');
             $table->string('pelaksana_nd')->nullable();
             $table->string('nip')->nullable();
             $table->string('nomor_nd')->nullable();
