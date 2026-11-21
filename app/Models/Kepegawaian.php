@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 class Kepegawaian extends Model
 {
@@ -23,7 +24,21 @@ class Kepegawaian extends Model
     public function tempatTanggalLahir(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->attributes['tempat_lahir'].', '.Carbon::parse($this->attributes['tanggal_lahir'])->translatedFormat('d F Y'),
+            get: fn () => empty($this->attributes['tanggal_lahir'])
+                ? $this->attributes['tempat_lahir']
+                : $this->attributes['tempat_lahir'].', '.Carbon::parse($this->attributes['tanggal_lahir'])->translatedFormat('d F Y'),
+        );
+    }
+
+    /**
+     * Usia pegawai dalam tahun penuh, dihitung dari tanggal lahir.
+     */
+    public function usia(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => empty($this->attributes['tanggal_lahir'])
+                ? null
+                : Carbon::parse($this->attributes['tanggal_lahir'])->age,
         );
     }
 
