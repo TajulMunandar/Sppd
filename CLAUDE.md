@@ -44,13 +44,13 @@ ID SPPD dan `jenis_tugas_id` dioper antar langkah sebagai query string, sebagian
 ### Surat Tugas mandiri & integrasi SIMPEG
 Terpisah dari wizard SPPD:
 - `CreateSuratTugasController` (`surat-tugas.*`) mengambil data pegawai real-time dari API SIMPEG eksternal (`simpeg.pupr-acehbaratkab.com`) dengan Guzzle, memakai bearer token dari tabel `api_token` (`ApiToken` dengan `app_name = 'Sijadin'`, dikelola di menu API Token). Hasil cetak disimpan sebagai snapshot di `riwayat_surat_tugas` (kolom `pegawai` berisi JSON), lalu ditampilkan di `RiwayatSuratTugasController` (Yajra DataTables server-side, respons `ajax()`).
-- `POST /api/sync-kepegawaian` (tanpa auth) menerima push data pegawai dari SIMPEG dan meng-upsert tabel `kepegawaian` berdasarkan `id_lama`, menghapus yang tidak ada di payload.
+- `POST /api/sync-kepegawaian` (token bearer, lihat Otorisasi) menerima push data pegawai dari SIMPEG dan meng-upsert tabel `kepegawaian`: cocokkan lewat `id_lama` (ID SIMPEG), lalu lewat `nip_baru` untuk baris yang `id_lama`-nya kosong. Pegawai yang tidak dikirim **tidak dihapus** (relasi `sppd_pegawai` memakai cascade delete); item yang gagal validasi dilewati dan dilaporkan di `skipped`; payload kosong ditolak 422. Skema `kepegawaian` produksi pernah diubah manual — migration `2026_11_21_000000_align_kepegawaian_table_with_production` menyamakannya dan hanya menambah index `id_lama` bila dijalankan di produksi.
 
 ### Model pegawai
 `Pegawai` dan `Kepegawaian` sama-sama memetakan tabel `kepegawaian` (`Pegawai` dipakai wizard SPPD, `Kepegawaian` untuk sinkronisasi). Keduanya punya accessor `nama_lengkap` (gelar depan + nama + gelar belakang).
 
 ### Otorisasi
-spatie/laravel-permission dengan role `admin` dan `user` (Karyawan) — lihat `RoleSeeder`. `routes/web.php` dibagi tiga grup: `auth` saja (dashboard, profil), `auth` + `role:admin` (user, pegawai, jenis tugas, surat tugas mandiri & riwayat, API token, reset password), dan `auth` + `role:admin|user` (seluruh modul SPPD beserta langkah rincian, dokumen ST, dan export). Akun tanpa role akan mendapat 403 di luar grup pertama. Saat menambah route, letakkan di grup yang sesuai dan samakan dengan `@role` di sidebar/dashboard. Pendaftaran mandiri (`/register`) dinonaktifkan; akun dibuat admin. `POST /api/sync-kepegawaian` masih tanpa autentikasi.
+spatie/laravel-permission dengan role `admin` dan `user` (Karyawan) — lihat `RoleSeeder`. `routes/web.php` dibagi tiga grup: `auth` saja (dashboard, profil), `auth` + `role:admin` (user, pegawai, jenis tugas, surat tugas mandiri & riwayat, API token, reset password), dan `auth` + `role:admin|user` (seluruh modul SPPD beserta langkah rincian, dokumen ST, dan export). Akun tanpa role akan mendapat 403 di luar grup pertama. Saat menambah route, letakkan di grup yang sesuai dan samakan dengan `@role` di sidebar/dashboard. Pendaftaran mandiri (`/register`) dinonaktifkan; akun dibuat admin. `POST /api/sync-kepegawaian` dilindungi middleware `sync.token` (`App\Http\Middleware\VerifySyncToken`): pemanggil wajib mengirim `Authorization: Bearer <SIMPEG_SYNC_TOKEN>`; bila `SIMPEG_SYNC_TOKEN` kosong endpoint membalas 503.
 
 ## Aturan tambahan
 

@@ -13,7 +13,7 @@ class Kepegawaian extends Model
 
     protected $table = 'kepegawaian';
 
-    protected $fillable = ['nama', 'gelar_depan', 'gelar_belakang', 'tempat_lahir', 'tanggal_lahir', 'nip_lama', 'nip_baru', 'universitas', 'jurusan', 'tingkat_ijazah', 'tahun_lulus', 'golongan_id', 'tmt_cpns', 'tmt_pangkat_terakhir', 'jabatan', 'masa_kerja_tahun', 'masa_kerja_bulan', 'unit_kerja', 'instansi_induk', 'alamat', 'telp', 'rencana_naik_pangkat', 'rencana_naik_gaji'];
+    protected $fillable = ['id_lama', 'nama', 'gelar_depan', 'gelar_belakang', 'tempat_lahir', 'tanggal_lahir', 'nip_lama', 'nip_baru', 'universitas', 'jurusan', 'tingkat_ijazah', 'tahun_lulus', 'golongan_id', 'tmt_cpns', 'tmt_pangkat_terakhir', 'jabatan', 'masa_kerja_tahun', 'masa_kerja_bulan', 'unit_kerja', 'instansi_induk', 'alamat', 'telp', 'rencana_naik_pangkat', 'rencana_naik_gaji'];
 
     protected $appends = [
         'nama_lengkap',
