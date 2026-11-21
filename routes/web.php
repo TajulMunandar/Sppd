@@ -34,35 +34,19 @@ Route::get('/', function () {
     return view('welcome', compact('title'));
 })->middleware('guest');
 
-// Export Data Excel
-Route::get('/export-sppd/{jenis}', [SppdController::class, 'exportAll'])->name('sppd.export-all');
-Route::post('/export-excel/{sppdId}', [SppdController::class, 'exportExcel'])->name('sppd.export');
-
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
+// Master data, surat tugas mandiri, dan pengaturan sistem hanya untuk admin.
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('/user', UserController::class);
     Route::resource('/pegawai', PegawaiController::class);
-    Route::resource('/sppd', SppdController::class);
     Route::resource('/jenis', JenisTugasController::class);
-
-    // surat
-    Route::resource('/surat', SuratTugasController::class)->parameters([
-        'sppd' => 'id',
-    ]);
-    Route::get('/surat/{sppd}/detail', [SuratTugasController::class, 'showDetail'])->name('surat.detail');
-    Route::post('/surat/detail', [SuratTugasController::class, 'storeDetail'])->name('surat.detailStore');
-
-    // Dokumen Surat Tugas
-    Route::controller(DokumenSuratTugasController::class)->prefix('dokumen-st')
-        ->name('dokumen-st.')->group(function () {
-            Route::get('/{sppd}', 'index')->name('index');
-            Route::post('/store', 'store')->name('store');
-        });
 
     Route::prefix('surat-tugas')->name('surat-tugas.')->group(function () {
 
@@ -80,6 +64,38 @@ Route::middleware('auth')->group(function () {
                 Route::get('/destroy/{id}', 'destroy')->name('destroy');
             });
     });
+
+    Route::put('/resetpassword/{user}', [UserController::class, 'resetPasswordAdmin'])
+        ->name('resetpassword.resetPasswordAdmin');
+
+    Route::controller(ApiTokenController::class)->prefix('api-token')->name('api-token.')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/{api}/edit', 'edit')->name('edit');
+        });
+});
+
+// Modul SPPD dipakai admin dan karyawan (role user), sesuai menu sidebar masing-masing.
+Route::middleware(['auth', 'role:admin|user'])->group(function () {
+    // Export Data Excel
+    Route::get('/export-sppd/{jenis}', [SppdController::class, 'exportAll'])->name('sppd.export-all');
+    Route::post('/export-excel/{sppdId}', [SppdController::class, 'exportExcel'])->name('sppd.export');
+
+    Route::resource('/sppd', SppdController::class);
+
+    // surat
+    Route::resource('/surat', SuratTugasController::class)->parameters([
+        'sppd' => 'id',
+    ]);
+    Route::get('/surat/{sppd}/detail', [SuratTugasController::class, 'showDetail'])->name('surat.detail');
+    Route::post('/surat/detail', [SuratTugasController::class, 'storeDetail'])->name('surat.detailStore');
+
+    // Dokumen Surat Tugas
+    Route::controller(DokumenSuratTugasController::class)->prefix('dokumen-st')
+        ->name('dokumen-st.')->group(function () {
+            Route::get('/{sppd}', 'index')->name('index');
+            Route::post('/store', 'store')->name('store');
+        });
 
     // uang
     Route::resource('/uang', UangHarianController::class)->parameters([
@@ -108,15 +124,6 @@ Route::middleware('auth')->group(function () {
     ]);
     Route::get('/pulang/{sppd}/detail', [TiketPulangController::class, 'showDetail'])->name('pulang.detail');
     Route::post('/pulang/detail', [TiketPulangController::class, 'storeDetail'])->name('pulang.detailStore');
-
-    Route::put('/resetpassword/{user}', [UserController::class, 'resetPasswordAdmin'])
-        ->name('resetpassword.resetPasswordAdmin');
-
-    Route::controller(ApiTokenController::class)->prefix('api-token')->name('api-token.')
-        ->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::get('/{api}/edit', 'edit')->name('edit');
-        });
 });
 
 require __DIR__ . '/auth.php';

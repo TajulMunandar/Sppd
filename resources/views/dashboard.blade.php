@@ -14,6 +14,7 @@
                     </div>
                 </a>
             </div>
+            @role('admin')
             <div class="col-sm-6 col-md-4 col-lg">
                 <a href="{{ route('pegawai.index') }}">
                     <div class="card">
@@ -40,6 +41,7 @@
                     </div>
                 </a>
             </div>
+            @endrole
         </div>
     </div>
 </x-app-layout>
