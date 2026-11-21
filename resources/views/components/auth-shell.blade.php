@@ -4,10 +4,6 @@
     'status' => null,
 ])
 
-@push('css')
-    <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
-@endpush
-
 <main class="auth">
     <aside class="auth-brand" aria-label="Tentang aplikasi">
         <div class="auth-brand__inner">

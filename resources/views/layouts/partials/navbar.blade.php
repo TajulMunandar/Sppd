@@ -2,7 +2,7 @@
     id="layout-navbar">
     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-            <i class="fa-regular fa-bars fa-lg"></i>
+            <i class="bi bi-list fs-3"></i>
         </a>
     </div>
 
@@ -22,7 +22,7 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <i class="fa-duotone fa-user-circle fa-3x text-primary"></i>
+                                        <i class="bi bi-person-circle fs-1 text-primary"></i>
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
@@ -48,7 +48,7 @@
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
                             <button type="submit" class="dropdown-item">
-                                <i class="fa-regular fa-arrow-right-from-bracket me-2"></i>
+                                <i class="bi bi-box-arrow-right me-2"></i>
                                 Logout
                             </button>
                         </form>

@@ -20,11 +20,11 @@
     <div class="row">
         <div class="col-12">
             <a class="text-white btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahSppd">
-                <i class="fa-regular fa-plus me-2"></i>
+                <i class="bi bi-plus-lg me-2"></i>
                 Tambah
             </a>
             <button type="button" data-bs-toggle="modal" data-bs-target="#modal-switch" class="btn btn-success"><i
-                    class="fa fa-file"></i> Export</button>
+                    class="bi bi-file-earmark-spreadsheet"></i> Export</button>
 
             <div class="mt-3 card">
                 <div class="card-body">
@@ -63,14 +63,14 @@
                                     <td class="text-center text-nowrap">
                                         <a class="text-white btn btn-sm btn-info" data-bs-toggle="modal"
                                             data-bs-target="#detailSppd{{ $loop->iteration }}">
-                                            <i class="fa-regular fa-list"></i>
+                                            <i class="bi bi-list-ul"></i>
                                         </a>
                                         <a class="btn btn-sm btn-warning" href="{{ route('sppd.edit', $sppd->id) }}">
-                                            <i class="fa-regular fa-pen-to-square"></i>
+                                            <i class="bi bi-pencil-square"></i>
                                         </a>
                                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#hapusSppd{{ $loop->iteration }}">
-                                            <i class="fa-regular fa-trash-can fa-lg"></i>
+                                            <i class="bi bi-trash fs-5"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -295,6 +295,17 @@
                     allowZero: true,
                     precision: 0
                 });
+            });
+        </script>
+        <script>
+            // Tautan "Buat SPPD" dari dashboard membuka form tambah secara langsung. Dipisah dari blok
+            // di atas agar tetap berjalan walau plugin lain gagal dimuat.
+            document.addEventListener('DOMContentLoaded', function () {
+                const modal = document.getElementById('tambahSppd');
+                if (window.location.hash === '#tambahSppd' && modal) {
+                    bootstrap.Modal.getOrCreateInstance(modal).show();
+                    history.replaceState(null, '', window.location.pathname + window.location.search);
+                }
             });
         </script>
     @endpush

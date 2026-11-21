@@ -16,6 +16,7 @@
 
     <link rel="stylesheet" href="{{ asset('libs/bootstrap-icons/font/bootstrap-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @stack('css')
     <title>{{ $attributes->get('title', 'Selamat datang') }} | {{ config('app.name') }}</title>
 </head>

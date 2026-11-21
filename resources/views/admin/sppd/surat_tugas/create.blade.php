@@ -24,33 +24,33 @@
     <div class="row">
         <div class="col col-md-12">
             <a class="btn btn-outline-secondary" href="{{ route('sppd.index') }}">
-                <i class="fa-regular fa-chevron-left me-2"></i>
+                <i class="bi bi-chevron-left me-2"></i>
                 Kembali
             </a>
             <div class="container mt-4">
                 <a href="{{ route('surat.index', ['id' => $sppdId, 'jenis' => $jenis]) }}" class="btn btn-primary">
-                    <i class="fa-regular fa-envelopes-bulk me-2"></i>
+                    <i class="bi bi-envelope-paper me-2"></i>
                     Surat Tugas
                 </a>
                 <a href="{{ route('uang.index', ['id' => $sppdId, 'jenis' => $jenis]) }}"
                     class="btn btn-outline-secondary">
-                    <i class="fa-regular fa-money-bill me-2"></i>
+                    <i class="bi bi-cash me-2"></i>
                     Uang Harian
                 </a>
                 @if ($tipe == 1)
                     <a href="{{ route('akomodasi.index', ['id' => $sppdId, 'jenis' => $jenis]) }}"
                         class="btn btn-outline-secondary">
-                        <i class="fa-regular fa-cars me-2"></i>
+                        <i class="bi bi-building me-2"></i>
                         Akomodasi
                     </a>
                     <a href="{{ route('pergi.index', ['id' => $sppdId, 'jenis' => $jenis]) }}"
                         class="btn btn-outline-secondary">
-                        <i class="fa-regular fa-plane-departure me-2"></i>
+                        <i class="bi bi-airplane me-2"></i>
                         Tiket Pergi
                     </a>
                     <a href="{{ route('pulang.index', ['id' => $sppdId, 'jenis' => $jenis]) }}"
                         class="btn btn-outline-secondary">
-                        <i class="fa-regular fa-plane-arrival me-2"></i>
+                        <i class="bi bi-arrow-return-left me-2"></i>
                         Tiket Pulang
                     </a>
                 @endif

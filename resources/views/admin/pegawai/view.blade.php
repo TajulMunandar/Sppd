@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col col-md-12">
             <a class="btn btn-outline-secondary" href="{{ route('pegawai.index') }}">
-                <i class="fa-regular fa-chevron-left me-2"></i>
+                <i class="bi bi-chevron-left me-2"></i>
                 Kembali
             </a>
 

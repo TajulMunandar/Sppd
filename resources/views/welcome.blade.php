@@ -1,8 +1,4 @@
 <x-guest-layout split>
-    @push('css')
-        <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
-    @endpush
-
     <main class="welcome">
         <div class="welcome__inner">
             <header class="welcome__top">

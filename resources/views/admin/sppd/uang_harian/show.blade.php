@@ -20,11 +20,11 @@
     <div class="row">
         <div class="col">
             <a class="btn btn-outline-secondary" href="{{ route('sppd.index') }}">
-                <i class="fa-regular fa-chevron-left me-2"></i>
+                <i class="bi bi-chevron-left me-2"></i>
                 Kembali
             </a>
             <a class="text-white btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahSppd">
-                <i class="fa-regular fa-plus me-2"></i>
+                <i class="bi bi-plus-lg me-2"></i>
                 Tambah
             </a>
             <div class="mt-3 card">
@@ -53,11 +53,11 @@
                                     <td>
                                         <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                             data-bs-target="#editSppd{{ $loop->iteration }}">
-                                            <i class="fa-regular fa-pen-to-square"></i>
+                                            <i class="bi bi-pencil-square"></i>
                                         </button>
                                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#hapusSppd{{ $loop->iteration }}">
-                                            <i class="fa-regular fa-trash-can fa-lg"></i>
+                                            <i class="bi bi-trash fs-5"></i>
                                         </button>
                                     </td>
                                 </tr>

@@ -16,7 +16,7 @@
     </div>
 
     <button class="btn btn-primary fs-5 fw-normal mt-2" data-bs-toggle="modal" data-bs-target="#tambahUser"><i
-            class="fa-solid fa-square-plus fs-5 me-2"></i>Tambah</button>
+            class="bi bi-plus-square fs-5 me-2"></i>Tambah</button>
     <div class="row mt-3">
         <div class="col-12">
             <div class="card mt-2">
@@ -41,15 +41,15 @@
                                         <td class="text-end">
                                             <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                                 data-bs-target="#editUser{{ $loop->iteration }}">
-                                                <i class="fa-solid fa-pen-to-square"></i>
+                                                <i class="bi bi-pencil-square"></i>
                                             </button>
                                             <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                                 data-bs-target="#hapusUser{{ $loop->iteration }}">
-                                                <i class="fa-solid fa-trash"></i>
+                                                <i class="bi bi-trash"></i>
                                             </button>
                                             <button class="btn btn-sm btn-secondary" data-bs-toggle="modal"
                                                 data-bs-target="#modalResetPassword{{ $loop->iteration }}">
-                                                <i class="fa-regular fa-unlock-keyhole"></i>
+                                                <i class="bi bi-unlock"></i>
                                             </button>
                                         </td>
                                     </tr>

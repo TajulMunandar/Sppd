@@ -17,7 +17,7 @@
     </div>
 
     <button class="mt-2 btn btn-primary fs-5 fw-normal" data-bs-toggle="modal" data-bs-target="#tambahJenis"><i
-            class="fa-solid fa-square-plus fs-5 me-2"></i>Tambah
+            class="bi bi-plus-square fs-5 me-2"></i>Tambah
     </button>
     <div class="mt-3 row">
         <div class="col">
@@ -42,11 +42,11 @@
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                             data-bs-target="#editJenis{{ $loop->iteration }}">
-                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <i class="bi bi-pencil-square"></i>
                                         </button>
                                         <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#hapusJenis{{ $loop->iteration }}">
-                                            <i class="fa-solid fa-trash"></i>
+                                            <i class="bi bi-trash"></i>
                                         </button>
                                     </td>
                                 </tr>

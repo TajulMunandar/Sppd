@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-primary" id="sync-btn"><i class="fa fa-sync me-2"></i> Sinkron
+                            <button class="btn btn-primary" id="sync-btn"><i class="bi bi-arrow-repeat me-2"></i> Sinkron
                                 Database</button>
                         </div>
                     </div>
