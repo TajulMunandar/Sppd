@@ -1,25 +1,19 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-    </div>
+<x-guest-layout split title="Lupa kata sandi">
+    <x-auth-shell title="Lupa kata sandi?"
+                  subtitle="Masukkan email akun Anda. Kami akan mengirimkan tautan untuk membuat kata sandi baru."
+                  :status="session('status')">
+        <form method="POST" action="{{ route('password.email') }}">
+            @csrf
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+            <x-auth-input name="email" type="email" label="Email" icon="bi-envelope" :value="old('email')"
+                          placeholder="nama@contoh.com" autocomplete="username" required autofocus />
 
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
+            <x-auth-submit label="Kirim tautan reset" icon="bi-send" class="mt-2" />
+        </form>
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
+        <x-slot:footer>
+            <i class="bi bi-arrow-left" aria-hidden="true"></i>
+            <span>Sudah ingat kata sandi? <a href="{{ route('login') }}" class="auth-link">Kembali ke halaman masuk</a></span>
+        </x-slot:footer>
+    </x-auth-shell>
 </x-guest-layout>

@@ -575,6 +575,30 @@
     margin-top: 0.1rem;
 }
 
+.auth-link {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--auth-primary);
+    font: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(25, 38, 85, 0.3);
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.auth-link:hover {
+    color: var(--auth-primary-hover);
+    text-decoration-color: currentColor;
+}
+
+.auth-link:focus-visible {
+    border-radius: 4px;
+    outline: 2px solid var(--auth-primary);
+    outline-offset: 2px;
+}
+
 /* ---------- Halaman welcome ---------- */
 .welcome {
     min-height: 100vh;
