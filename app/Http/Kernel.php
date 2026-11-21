@@ -93,5 +93,6 @@ class Kernel extends HttpKernel
         'role' => RoleMiddleware::class,
         'permission' => PermissionMiddleware::class,
         'role_or_permission' => RoleOrPermissionMiddleware::class,
+        'sync.token' => \App\Http\Middleware\VerifySyncToken::class,
     ];
 }

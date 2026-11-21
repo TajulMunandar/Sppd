@@ -31,4 +31,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    // Token yang wajib dikirim SIMPEG saat memanggil POST /api/sync-kepegawaian.
+    'simpeg_sync' => [
+        'token' => env('SIMPEG_SYNC_TOKEN'),
+    ],
+
 ];

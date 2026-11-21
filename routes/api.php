@@ -19,4 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/sync-kepegawaian', [SyncKepegawaianController::class, 'sync'])->name('sync-kepegawaian');
+Route::post('/sync-kepegawaian', [SyncKepegawaianController::class, 'sync'])
+    ->middleware('sync.token')
+    ->name('sync-kepegawaian');
