@@ -1,20 +1,41 @@
-<x-guest-layout>
-    <div class="row">
-        <div class="card smooth-shadow-md">
-            <!-- Card body -->
-            <div class="card-body p-6">
-                <div class="mb-4">
-                    <a href="#" class="d-flex justify-content-center">
-                        <img src="{{ asset('images/logo/logo.png') }}" class="img-fluid mb-6" alt="logo"
-                             style="width: 100px">
+<x-guest-layout split>
+    @push('css')
+        <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+    @endpush
+
+    <main class="welcome">
+        <div class="welcome__inner">
+            <header class="welcome__top">
+                @include('layouts.partials.auth-identity')
+            </header>
+
+            <section class="welcome__hero" aria-labelledby="welcome-title">
+                <p class="auth-brand__eyebrow">Sistem Informasi Layanan SPPD</p>
+                <h1 class="welcome__title" id="welcome-title">
+                    Perjalanan dinas tercatat rapi, dari surat tugas hingga laporan biaya.
+                </h1>
+                <p class="welcome__lead">
+                    Layanan pengelolaan Surat Perintah Perjalanan Dinas di lingkungan
+                    Dinas PUPR Kabupaten Aceh Barat.
+                </p>
+
+                <div class="welcome__actions">
+                    <a href="{{ route('login') }}" class="welcome__cta">
+                        Masuk ke {{ config('app.name') }}
+                        <i class="bi bi-arrow-right" aria-hidden="true"></i>
                     </a>
-                    <div class="mb-5">
-                        <h3>Selamat Datang di Layanan SPPD</h3>
-                        <h4 class="mb-2">Dinas PUPR Aceh Barat</h4>
-                    </div>
-                    <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+                    <p class="welcome__note">
+                        <i class="bi bi-shield-lock" aria-hidden="true"></i>
+                        Khusus pegawai dengan akun terdaftar.
+                    </p>
                 </div>
-            </div>
+            </section>
+
+            <section class="welcome__features" aria-label="Fitur utama">
+                @include('layouts.partials.auth-features')
+            </section>
+
+            <footer class="auth-brand__footer">&copy; {{ date('Y') }} Pemerintah Kabupaten Aceh Barat</footer>
         </div>
-    </div>
+    </main>
 </x-guest-layout>
