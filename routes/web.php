@@ -42,7 +42,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Master data, surat tugas mandiri, dan pengaturan sistem hanya untuk admin.
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('/user', UserController::class);
     Route::resource('/pegawai', PegawaiController::class);
@@ -50,14 +49,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::prefix('surat-tugas')->name('surat-tugas.')->group(function () {
 
-        // Buat Surat Tugas
         Route::controller(CreateSuratTugasController::class)
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::post('/print', 'print')->name('print');
             });
 
-        // Riwayat Surat Tugas
         Route::controller(RiwayatSuratTugasController::class)->prefix('riwayat')->name('riwayat.')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
@@ -75,50 +72,43 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         });
 });
 
-// Modul SPPD dipakai admin dan karyawan (role user), sesuai menu sidebar masing-masing.
 Route::middleware(['auth', 'role:admin|user'])->group(function () {
-    // Export Data Excel
+
     Route::get('/export-sppd/{jenis}', [SppdController::class, 'exportAll'])->name('sppd.export-all');
     Route::post('/export-excel/{sppdId}', [SppdController::class, 'exportExcel'])->name('sppd.export');
 
     Route::resource('/sppd', SppdController::class);
 
-    // surat
     Route::resource('/surat', SuratTugasController::class)->parameters([
         'sppd' => 'id',
     ]);
     Route::get('/surat/{sppd}/detail', [SuratTugasController::class, 'showDetail'])->name('surat.detail');
     Route::post('/surat/detail', [SuratTugasController::class, 'storeDetail'])->name('surat.detailStore');
 
-    // Dokumen Surat Tugas
     Route::controller(DokumenSuratTugasController::class)->prefix('dokumen-st')
         ->name('dokumen-st.')->group(function () {
             Route::get('/{sppd}', 'index')->name('index');
             Route::post('/store', 'store')->name('store');
         });
 
-    // uang
     Route::resource('/uang', UangHarianController::class)->parameters([
         'sppd' => 'id',
     ]);
     Route::get('/uang/{sppd}/detail', [UangHarianController::class, 'showDetail'])->name('uang.detail');
     Route::post('/uang/detail', [UangHarianController::class, 'storeDetail'])->name('uang.detailStore');
 
-    // akomodasi
     Route::resource('/akomodasi', AkomodasiController::class)->parameters([
         'sppd' => 'id',
     ]);
     Route::get('/akomodasi/{sppd}/detail', [AkomodasiController::class, 'showDetail'])->name('akomodasi.detail');
     Route::post('/akomodasi/detail', [AkomodasiController::class, 'storeDetail'])->name('akomodasi.detailStore');
 
-    // pergi
     Route::resource('/pergi', TiketPergiController::class)->parameters([
         'sppd' => 'id',
     ]);
     Route::get('/pergi/{sppd}/detail', [TiketPergiController::class, 'showDetail'])->name('pergi.detail');
     Route::post('/pergi/detail', [TiketPergiController::class, 'storeDetail'])->name('pergi.detailStore');
 
-    // pulang
     Route::resource('/pulang', TiketPulangController::class)->parameters([
         'sppd' => 'id',
     ]);
@@ -126,4 +116,4 @@ Route::middleware(['auth', 'role:admin|user'])->group(function () {
     Route::post('/pulang/detail', [TiketPulangController::class, 'storeDetail'])->name('pulang.detailStore');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
